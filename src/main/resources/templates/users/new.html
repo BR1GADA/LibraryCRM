@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForUser.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>New user</title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+<form th:method="POST" th:action="@{/users}" th:object="${newUser}">
+    <div class="formToFill">
+        <label for="address_input" class="label">ADDRESS</label>
+        <input type="text" th:field = "*{address}" id="address_input">
+        <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="label"></div>
+    </div>
+    <div class="formToFill">
+        <label for="name" class="label">NAME</label>
+        <input type="text" th:field="*{name}" id="name">
+        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="label"></div>
+    </div>
+    <div class="formToFill">
+        <label for="gender" class="label">GENDER</label>
+        <select th:object="${newUser}" th:field="*{gender}" id="gender">
+            <option th:each="g : ${genders}" th:value="${g}" th:text="${g.toString()}"></option>
+        </select>
+    </div>
+
+    <input type="submit" value="Add" class="btn"></input>
+</form>
+</body>
+</html>

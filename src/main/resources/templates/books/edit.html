@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+
+  <form th:method="PATCH" th:action="@{/books/{id}(id=${curBook.getId()})}" th:object="${curBook}">
+      <div class="formToFillBook">
+          <label class="label" for="nameInput" >Name Input</label>
+          <input type="text" th:field="*{name}" id="nameInput">
+          <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="label"></div>
+      </div>
+      <div class="formToFillBook">
+          <label class="label" for="yearInput" >Year Input</label>
+          <input type="text" th:field="*{year}" id="yearInput">
+          <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="label"></div>
+      </div>
+      <div class="formToFillBook">
+          <label for="authorInput" >Author Input</label>
+          <input type="text" th:field="*{author}" id="authorInput">
+          <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>
+      </div>
+      <input type="submit" class="btn" value="Update Book">
+  </form>
+</body>
+</html>

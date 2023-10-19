@@ -1,0 +1,53 @@
+.btn {
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Серый цвет фона */
+    color: #ffffff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px;
+    margin-bottom: 5px;/* Скругляем уголки */
+    margin-right: 20px;
+}
+.eachUser {
+    cursor: pointer;
+    color: #ffffff; /* Белый цвет текста */
+    background: #000000;
+    display: block;
+    padding: 1rem 1.5rem;
+    margin-bottom: 10px;
+    text-decoration: none;
+    width: 5%;
+}
+.formToFill{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.label {
+    padding: 10px;
+}
+.spanOfButtons {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.flex-navBar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navBarButton{
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    background-color: rgb(70,70,70);
+    border: 5px rgb(20,20,20);
+}

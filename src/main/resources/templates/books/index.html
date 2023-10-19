@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+
+<div>
+  <form th:method="get" th:action="@{/books}">
+    <label for="filter">Choose Filter</label>
+    <select th:object="${searchConfig}" th:field="*{filter}" th:name="filter" id="filter">
+      <option th:each="filter1 : ${filters}" th:value="${filter1}" th:text="${filter1.toString()}"></option>
+    </select>
+    <label for="searchString">Insert Book to search</label>
+    <input th:object="${searchConfig}" th:field="*{stringToFind}" type="text" th:name="stringToFind" id="searchString">
+    <button type="submit" th:name="page" th:value="${numberOfPage}" class="pageSelectorBtn" th:text="'Apply'" ></button>
+  </form>
+</div>
+
+
+<section class="gallery">
+  <div class="container-fluid">
+    <div class="row gy-4 justify-content-center">
+      <div th:each="book : ${allBooks}" class="col-xl-3 col-lg-4 col-md-6">
+        <a th:href="@{/books/{id}(id=${book.getId()})}" class="eachBook gallery-item h-100" th:text="${book.getName()}"></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<hr>
+
+<div style="display: flex ; flex-wrap: wrap;flex-direction: column;align-items: center;">
+  <div style="margin: auto"  th:insert = "fragments/components :: selectorOfPages"/>
+  <div>
+    <a style="margin: auto" th:href="@{/books/new}" class="btn">Adding</a>
+  </div>
+
+</div>
+
+
+</body>
+</html>

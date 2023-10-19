@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForUser.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title th:text="${id}"></title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+<div>
+    <p th:text="'| '+${user.getName()}+' |'" class="field"></p>
+    <p th:text="'| Is has book: '+${user.isHasBook()}+' |'" class="field"></p>
+    <p th:if="${user.getGender()!=null}" th:text="'| Gender: '+${user.getGender()} + ' |'"></p>
+</div>
+<div class="spanOfButtons">
+    <a th:href="@{/users/{id}/edit(id=${user.getId()})}" class="btn">Edit</a>
+    <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
+        <input type="submit" value="DELETE" class="btn" ></input>
+    </form>
+</div>
+
+</body>
+</html>

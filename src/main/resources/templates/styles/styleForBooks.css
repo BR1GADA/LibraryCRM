@@ -1,0 +1,120 @@
+.eachBook {
+    cursor: pointer;
+    color: #ffffff; /* Белый цвет текста */
+    background: #000000;
+    display: block;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    margin: 10px;
+
+}
+.formToFillBook{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+.label {
+    padding: 10px;
+}
+.btn {
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Серый цвет фона */
+    color: #ffffff; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px;
+    margin-bottom: 5px;/* Скругляем уголки */
+    margin-right: 20px;
+}
+.field {
+    text-decoration: underline overline;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.spanOfButtons {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.flex-navBar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navBarButton{
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    background-color: rgb(70,70,70);
+    border: 5px rgb(20,20,20);
+}
+.pageSelectorBtn{
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Серый цвет фона */
+    color: #ffffff; /* Белый цвет текста */
+    padding: 0.5rem 0.75rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px;
+    margin-bottom: 5px;/* Скругляем уголки */
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
+.container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    /*padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);*/
+    margin-right: auto;
+    margin-left: auto;
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+.g-4, .gy-4 {
+    --bs-gutter-y: 1.5rem;
+}
+@media(min-width: 768px){
+    .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}}
+@media (min-width: 1200px){
+    .col-xl-3 {
+        flex: 0 0 auto;
+        width: 25%;
+    }}
+@media (min-width: 992px){
+    .col-lg-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+    }
+}
+
+.gallery .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.gallery {
+    margin-top: 40px;
+}
+
+
+

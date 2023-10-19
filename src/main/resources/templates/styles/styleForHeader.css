@@ -1,0 +1,16 @@
+
+.flex-navBar{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navBarButton{
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    background-color: rgb(70,70,70);
+    border: 5px rgb(20,20,20);
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title th:text="${curBook.getId()}"></title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+<div>
+    <p th:text="'| '+${curBook.getName()}+' |'" class="field"></p>
+    <p th:text="'| '+${curBook.getYear()}+' |'" class="field"></p>
+    <p th:text="'| '+${curBook.getAuthor()}+' |'" class="field"></p>
+</div>
+<div class="spanOfButtons">
+    <a th:href="@{/books/{id}/edit (id=${curBook.getId()})}" class="btn">Edit</a>
+    <form th:method="DELETE" th:action="@{/books/{id}(id=${curBook.getId()})}" th:object="${curBook}">
+        <input type="submit" value="DELETE" class="btn" ></input>
+    </form>
+    <a th:if="${not curBook.isIstaken()}" th:href="@{/books/appoint/{id}(id=${curBook.getId()})}" class="btn" >Appoint</a>
+
+    <form th:method="POST" th:if="${curBook.isIstaken()}" th:action="@{/books/release/{id}(id=${curBook.getId()})}">
+        <input type="submit" value="Release" class="btn">
+    </form>
+
+</div>
+<div th:if="${curBook.isIstaken()}" th:text="'| '+ ${curUser.getName() + ' is owner '}+' |'" class="field"></div>
+
+
+
+</body>
+</html>

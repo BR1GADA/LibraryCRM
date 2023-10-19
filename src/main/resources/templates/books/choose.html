@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Choose User</title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+  <div>
+    <form th:method="POST" th:action="@{/books/appoint/{id}(id=${curBook.getId()})}">
+        <label for="user">Chose User</label>
+        <select th:object="${chosenUser}" th:field="*{id}" id="user">
+            <option th:each="user : ${users}" th:if="${not user.isHasBook()}" th:value = ${user.getId()} th:text="${user.getName()}">
+            </option>
+        </select>
+        <input type="submit" value="Select">
+    </form>
+  </div>
+</body>
+</html>

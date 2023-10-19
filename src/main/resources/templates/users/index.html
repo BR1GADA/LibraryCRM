@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link th:href="@{/styles/styleForUser.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/styles/styleForHeader.css}" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Users</title>
+
+
+</head>
+<header th:insert = "fragments/components :: header"></header>
+
+<body>
+
+
+<div th:each="user : ${users}">
+  <a class="eachUser" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"></a>
+</div>
+<hr>
+<a class="btn" th:href="@{/users/new}" >Adding</a>
+
+
+</body>
+</html>

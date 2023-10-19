@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cannot delete book</title>
+</head>
+<header th:insert = "fragments/components :: header"></header>
+<body>
+<div>
+  <p th:text="'| Sorry, but this book has an owner, we can`t delete it |'" class="field"></p>
+</div>
+</body>
+</html>
