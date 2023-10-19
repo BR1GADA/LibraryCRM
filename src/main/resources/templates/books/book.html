@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8">
     <title th:text="${curBook.getId()}"></title>
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
 </head>
 <header th:insert = "fragments/components :: header"></header>
 <body>
