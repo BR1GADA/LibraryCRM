@@ -55,10 +55,10 @@ public class BooksController {
         } catch (NumberFormatException ignore) {}
         searchConfig.setItemsPerPage(booksPerPage);
         searchConfig.setNumberOfPage(numberOfPage);
+        model.addAttribute("filters", BookFilter.values());
         model.addAttribute("filter", searchConfig.getFilter());
         model.addAttribute("allBooks", bookService.getBooks(searchConfig));
         model.addAttribute("numberOfPage", numberOfPage);
-        model.addAttribute("filters", BookFilter.values());
         model.addAttribute("stringToFind", searchConfig.getStringToFind());
         return "books/index";
     }

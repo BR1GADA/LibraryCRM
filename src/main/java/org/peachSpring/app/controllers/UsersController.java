@@ -9,6 +9,8 @@ import org.peachSpring.app.services.UserService;
 import org.peachSpring.app.util.constants.Gender;
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
+import org.peachSpring.app.util.search_config.constants.BookFilter;
+import org.peachSpring.app.util.search_config.constants.UserFilter;
 import org.peachSpring.app.util.validators.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +47,11 @@ public class UsersController {
         } catch (NumberFormatException ignore) {}
         searchConfig.setItemsPerPage(itemsPerPage);
         searchConfig.setNumberOfPage(numberOfPage);
+        model.addAttribute("filters", UserFilter.values());
         model.addAttribute("users", userService.findAll(searchConfig));
         model.addAttribute("numberOfPage", numberOfPage);
+        model.addAttribute("stringToFind", searchConfig.getStringToFind());
+        model.addAttribute("filter",searchConfig.getFilter());
         return "users/index";
     }
     @GetMapping("/{id}")

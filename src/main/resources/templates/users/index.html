@@ -12,6 +12,11 @@
 <header th:insert = "fragments/components :: header"></header>
 
 <body>
+<div>
+    <form th:method="get" th:action="@{/users}">
+        <div th:insert = "fragments/components :: configSelector"></div>
+    </form>
+</div>
 
 
 <div th:each="user : ${users}">

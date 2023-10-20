@@ -5,6 +5,8 @@
     <title>Header</title>
 </head>
 <body>
+
+
 <div th:fragment="header"  >
     <hr>
     <div class="flex-navBar">
@@ -15,17 +17,33 @@
     </div>
     <hr>
 </div>
+
+
 <div th:fragment="selectorOfBooksPages" style="display: flex ;align-items: center;">
     <a  th:if="${numberOfPage>0}" th:href="@{/books(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:text="${numberOfPage + 1}"></a>
     <a  th:href="@{/books(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
 </div>
+
+
 <div th:fragment="selectorOfUsersPages" style="display: flex ;align-items: center;">
     <a  th:if="${numberOfPage>0}" th:href="@{/users(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:text="${numberOfPage + 1}"></a>
     <a  th:href="@{/users(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
+</div>
+
+
+
+<div th:fragment="configSelector">
+    <label for="filter">Choose Filter</label>
+    <select th:object="${searchConfig}" th:field="*{filter}" th:name="filter" id="filter">
+        <option th:each="filter1 : ${filters}" th:value="${filter1}" th:text="${filter1.toString()}"></option>
+    </select>
+    <label for="searchString">Insert object to search</label>
+    <input th:object="${searchConfig}" th:field="*{stringToFind}" type="text" th:name="stringToFind" id="searchString">
+    <button type="submit" th:name="page" th:value="${numberOfPage}" class="pageSelectorBtn" th:text="'Apply'" ></button>
 </div>
 
 </body>

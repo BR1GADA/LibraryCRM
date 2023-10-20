@@ -10,13 +10,7 @@
 
 <div>
   <form th:method="get" th:action="@{/books}">
-    <label for="filter">Choose Filter</label>
-    <select th:object="${searchConfig}" th:field="*{filter}" th:name="filter" id="filter">
-      <option th:each="filter1 : ${filters}" th:value="${filter1}" th:text="${filter1.toString()}"></option>
-    </select>
-    <label for="searchString">Insert Book to search</label>
-    <input th:object="${searchConfig}" th:field="*{stringToFind}" type="text" th:name="stringToFind" id="searchString">
-    <button type="submit" th:name="page" th:value="${numberOfPage}" class="pageSelectorBtn" th:text="'Apply'" ></button>
+    <div th:insert = "fragments/components :: configSelector"></div>
   </form>
 </div>
 

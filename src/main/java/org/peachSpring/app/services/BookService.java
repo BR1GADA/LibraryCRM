@@ -4,8 +4,8 @@ import org.peachSpring.app.exceptions.BookNotFoundException;
 import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
 import org.peachSpring.app.repositories.BooksRepository;
-import org.peachSpring.app.util.advanced_search.BookSearcher;
-import org.peachSpring.app.util.advanced_search.FilterBookSearcher;
+import org.peachSpring.app.util.advanced_search.SearcherChain;
+import org.peachSpring.app.util.advanced_search.BookFilterSearcherChain;
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -60,12 +60,7 @@ public class BookService {
         List<Book> list = booksRepository.findAll(PageRequest.of(
                 searchConfig.getNumberOfPage(),
                 searchConfig.getItemsPerPage())).getContent();
-        BookSearcher bookSearcher = new FilterBookSearcher(searchConfig);
-        /*if (list.isEmpty()){
-            lastPageIndex = page - 1;
-            return booksRepository.findAll(PageRequest.of(page - 1,booksPerPage)).getContent();
-        }*/
-        return bookSearcher.bookSearcherManager(list);
+        return new BookFilterSearcherChain(searchConfig).searcherManager(list);
     }
 
     public int getLastPageIndex() {
