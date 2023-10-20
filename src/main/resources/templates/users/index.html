@@ -3,6 +3,7 @@
 <head>
     <link th:href="@{/styles/styleForUser.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/styles/styleForHeader.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8">
     <title>Users</title>
 
@@ -17,7 +18,14 @@
   <a class="eachUser" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"></a>
 </div>
 <hr>
-<a class="btn" th:href="@{/users/new}" >Adding</a>
+
+
+<div style="display: flex ; flex-wrap: wrap;flex-direction: column;align-items: center;">
+    <div style="margin: auto"  th:insert = "fragments/components :: selectorOfUsersPages"/>
+    <div>
+        <a style="margin: auto" class="btn" th:href="@{/users/new}" >Adding</a>
+    </div>
+</div>
 
 
 </body>

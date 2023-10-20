@@ -18,6 +18,18 @@
     text-decoration: none;
     width: 5%;
 }
+.pageSelectorBtn{
+    display: inline-block; /* Строчно-блочный элемент */
+    background: #8C959D; /* Серый цвет фона */
+    color: #ffffff; /* Белый цвет текста */
+    padding: 0.5rem 0.75rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px;
+    margin-bottom: 5px;/* Скругляем уголки */
+    margin-right: 20px;
+    margin-left: 20px;
+
+}
 .formToFill{
     margin-bottom: 20px;
     display: flex;

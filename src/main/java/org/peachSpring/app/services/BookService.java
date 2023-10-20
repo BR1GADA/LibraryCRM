@@ -59,7 +59,7 @@ public class BookService {
     public List<Book> getBooks(BookSearchConfig searchConfig){
         List<Book> list = booksRepository.findAll(PageRequest.of(
                 searchConfig.getNumberOfPage(),
-                searchConfig.getBooksPerPage())).getContent();
+                searchConfig.getItemsPerPage())).getContent();
         BookSearcher bookSearcher = new FilterBookSearcher(searchConfig);
         /*if (list.isEmpty()){
             lastPageIndex = page - 1;

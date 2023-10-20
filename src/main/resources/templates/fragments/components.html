@@ -15,11 +15,18 @@
     </div>
     <hr>
 </div>
-<div th:fragment="selectorOfPages" style="display: flex ;align-items: center;">
+<div th:fragment="selectorOfBooksPages" style="display: flex ;align-items: center;">
     <a  th:if="${numberOfPage>0}" th:href="@{/books(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:text="${numberOfPage + 1}"></a>
     <a  th:href="@{/books(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
 </div>
+<div th:fragment="selectorOfUsersPages" style="display: flex ;align-items: center;">
+    <a  th:if="${numberOfPage>0}" th:href="@{/users(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
+    <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
+    <a  th:text="${numberOfPage + 1}"></a>
+    <a  th:href="@{/users(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
+</div>
+
 </body>
 </html>

@@ -4,7 +4,9 @@ import org.peachSpring.app.exceptions.CannotDeleteUserException;
 import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
 import org.peachSpring.app.repositories.UsersRepository;
+import org.peachSpring.app.util.search_config.UserSearchConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,13 @@ public class UserService {
     }
     public List<User> findAll(){
         return usersRepository.findAll();
+    }
+    public List<User> findAll(UserSearchConfig userSearchConfig){
+        List<User> list = usersRepository.findAll(PageRequest.of(
+                userSearchConfig.getNumberOfPage(),
+                userSearchConfig.getItemsPerPage())).
+                getContent();
+        return list;
     }
     public User findOne(long id) throws UserNotFoundException{
         Optional<User> user = usersRepository.findById(id);

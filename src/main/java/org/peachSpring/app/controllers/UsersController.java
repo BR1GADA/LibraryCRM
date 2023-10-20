@@ -1,11 +1,14 @@
 package org.peachSpring.app.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.peachSpring.app.exceptions.CannotDeleteUserException;
 import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
 import org.peachSpring.app.services.UserService;
 import org.peachSpring.app.util.constants.Gender;
+import org.peachSpring.app.util.search_config.BookSearchConfig;
+import org.peachSpring.app.util.search_config.UserSearchConfig;
 import org.peachSpring.app.util.validators.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +32,21 @@ public class UsersController {
     }
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("users", userService.findAll());
-
+    public String index(HttpServletRequest httpServletRequest,
+                        Model model,
+                        @ModelAttribute("searchConfig") UserSearchConfig searchConfig){
+        int itemsPerPage = 16;
+        int numberOfPage = 0;
+        try {
+            numberOfPage = Integer.parseInt(httpServletRequest.getParameter("page"));
+            if (numberOfPage<0){
+                numberOfPage = 0;
+            }
+        } catch (NumberFormatException ignore) {}
+        searchConfig.setItemsPerPage(itemsPerPage);
+        searchConfig.setNumberOfPage(numberOfPage);
+        model.addAttribute("users", userService.findAll(searchConfig));
+        model.addAttribute("numberOfPage", numberOfPage);
         return "users/index";
     }
     @GetMapping("/{id}")

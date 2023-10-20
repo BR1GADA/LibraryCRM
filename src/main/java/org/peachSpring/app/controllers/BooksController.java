@@ -53,7 +53,7 @@ public class BooksController {
                 numberOfPage = 0;
             }
         } catch (NumberFormatException ignore) {}
-        searchConfig.setBooksPerPage(booksPerPage);
+        searchConfig.setItemsPerPage(booksPerPage);
         searchConfig.setNumberOfPage(numberOfPage);
         model.addAttribute("filter", searchConfig.getFilter());
         model.addAttribute("allBooks", bookService.getBooks(searchConfig));
