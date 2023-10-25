@@ -14,3 +14,10 @@
     background-color: rgb(70,70,70);
     border: 5px rgb(20,20,20);
 }
+.field {
+    text-decoration: underline overline;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

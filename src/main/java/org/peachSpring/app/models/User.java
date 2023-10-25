@@ -37,6 +37,17 @@ public class User {
     private Gender gender;
 
 
+    @Column(name = "login")
+    @NotEmpty(message = "Login shouldn`t be empty")
+    @Size(min = 4, max = 30, message = "Login`s length should be bigger than 4, and less than 30")
+    private String login;
+
+    @Column(name = "password")
+    @NotEmpty(message = "Password mustn`t be empty")
+    private String password;
+
+
+
     public User(long id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -104,6 +115,22 @@ public class User {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

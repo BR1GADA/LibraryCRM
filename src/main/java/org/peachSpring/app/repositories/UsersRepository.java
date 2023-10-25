@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<User,Long> {
     Optional<User> findFirstByNameIgnoreCase( String name);
 
+    Optional<User> findByLogin(String login);
+
     @Override
     Page<User> findAll(Pageable pageable);
 }
