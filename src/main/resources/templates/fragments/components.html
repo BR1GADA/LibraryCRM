@@ -9,14 +9,17 @@
 
 <div th:fragment="header"  >
     <hr>
-    <div class="flex-navBar">
-        <a th:href="@{/}" th:text="'Main page'" class="navBarButton"></a>
-        <a th:href="@{/books}" th:text="'Show all books'" class="navBarButton"> </a>
-        <a th:href="@{/users}" th:text="'Show all users'" class="navBarButton"></a>
-        <a th:href="@{/users/new}" th:text="'Add new User'" class="navBarButton"></a>
-        <a th:href="@{/books/new}"  th:text="'Add new Book'" class="navBarButton"></a>
-
+    <div class="row" style="margin: auto; width: 100%; display: flex;justify-content: space-between">
+        <div class="row">
+            <a th:href="@{/}" th:text="'Main page'" class="navBarButton"></a>
+            <a th:href="@{/books}" th:text="'Show all books'" class="navBarButton"> </a>
+            <a th:href="@{/users}" th:text="'Show all users'" class="navBarButton"></a>
+            <a th:href="@{/users/new}" th:text="'Add new User'" class="navBarButton"></a>
+            <a th:href="@{/books/new}"  th:text="'Add new Book'" class="navBarButton"></a>
+        </div>
+        <a th:href="@{/logout}" th:text="'Logout'" class="navBarButton"></a>
     </div>
+
     <hr>
 </div>
 

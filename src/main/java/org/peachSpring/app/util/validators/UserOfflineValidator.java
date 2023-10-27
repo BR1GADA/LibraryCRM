@@ -10,12 +10,12 @@ import org.springframework.validation.Validator;
 import java.util.Optional;
 
 @Component
-public class UserValidator implements Validator {
+public class UserOfflineValidator implements Validator {
 
     private final UserService usersService;
 
     @Autowired
-    public UserValidator(UserService usersService) {
+    public UserOfflineValidator(UserService usersService) {
         this.usersService = usersService;
 
     }
@@ -34,9 +34,5 @@ public class UserValidator implements Validator {
                 errors.rejectValue("name","","This name is already exists");
             }
         }
-        if (curUser.getAddress() ==null){
-            errors.rejectValue("address", "", "Address cannot be empty");
-        }
-
     }
 }

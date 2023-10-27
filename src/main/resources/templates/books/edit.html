@@ -9,17 +9,17 @@
 <body>
 
   <form th:method="PATCH" th:action="@{/books/{id}(id=${curBook.getId()})}" th:object="${curBook}">
-      <div class="formToFillBook">
+      <div class="formToFill">
           <label class="label" for="nameInput" >Name Input</label>
           <input type="text" th:field="*{name}" id="nameInput">
           <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="label"></div>
       </div>
-      <div class="formToFillBook">
+      <div class="formToFill">
           <label class="label" for="yearInput" >Year Input</label>
           <input type="text" th:field="*{year}" id="yearInput">
           <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="label"></div>
       </div>
-      <div class="formToFillBook">
+      <div class="formToFill">
           <label for="authorInput" >Author Input</label>
           <input type="text" th:field="*{author}" id="authorInput">
           <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>

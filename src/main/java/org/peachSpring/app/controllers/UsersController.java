@@ -7,11 +7,9 @@ import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
 import org.peachSpring.app.services.UserService;
 import org.peachSpring.app.util.constants.Gender;
-import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
-import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.search_config.constants.UserFilter;
-import org.peachSpring.app.util.validators.UserValidator;
+import org.peachSpring.app.util.validators.UserOfflineValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,12 +22,12 @@ import java.util.Arrays;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserValidator userValidator;
+    private final UserOfflineValidator userOfflineValidator;
     private final UserService userService;
 
-    public UsersController(UserValidator userValidator, UserService userService) {
+    public UsersController(UserOfflineValidator userOfflineValidator, UserService userService) {
 
-        this.userValidator = userValidator;
+        this.userOfflineValidator = userOfflineValidator;
         this.userService = userService;
     }
 
@@ -37,7 +35,7 @@ public class UsersController {
     public String index(HttpServletRequest httpServletRequest,
                         Model model,
                         @ModelAttribute("searchConfig") UserSearchConfig searchConfig){
-        int itemsPerPage = 16;
+        int itemsPerPage = 9;
         int numberOfPage = 0;
         try {
             numberOfPage = Integer.parseInt(httpServletRequest.getParameter("page"));
@@ -79,7 +77,7 @@ public class UsersController {
                                 @ModelAttribute("newUser")
                                  @Valid User user,
                                 BindingResult bindingResult){
-        userValidator.validate(user,bindingResult);
+        userOfflineValidator.validate(user,bindingResult);
         if (bindingResult.hasErrors()){
             model.addAttribute("genders",Arrays.asList(Gender.values()));
             return "users/new";
@@ -98,7 +96,7 @@ public class UsersController {
                             @ModelAttribute("curUser") @Valid User user,
                            BindingResult bindingResult,
                            @PathVariable("id") long id){
-        userValidator.validate(user,bindingResult);
+        userOfflineValidator.validate(user,bindingResult);
         model.addAttribute("genders",Arrays.asList(Gender.MALE,Gender.FEMALE));
         if (bindingResult.hasErrors()){
             return "users/edit";

@@ -1,0 +1,54 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+}
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+}
+.card-registration .select-arrow {
+    top: 13px;
+}
+.form-outline {
+    font-family: Verdana, sans-serif;
+    position: relative;
+}
+
+.form-outline input {
+    display: block;
+    outline: none;
+    width: 100%;
+    background: #fff;
+    border: 2px solid rgba(106, 17, 203, 1);
+    border-radius: 0.25rem;
+
+    color: #500;
+    font-family: inherit;
+    cursor: pointer;
+}
+.form-outline label {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    color: #aaa;
+
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+
+.form-outline input:valid + label,
+.form-outline input:focus + label {
+    top: 0;
+    font-size: 10px;
+}

@@ -8,19 +8,19 @@
 <header th:insert = "fragments/components :: header"></header>
 <body>
 <form th:method="POST" th:action="@{/books}" th:object="${bookToAdd}">
-    <div class="formToFillBook">
+    <div class="formToFill">
         <label for="name_input" class="label">Book`s name</label>
         <input type="text" th:field="*{name}" id="name_input">
         <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="label"></div>
         <!-- тут блок вадидации имени -->
     </div>
-    <div class="formToFillBook">
+    <div class="formToFill">
         <label for="year_input" class="label">Book`s year</label>
         <input type="text" th:field="*{year}" id="year_input">
         <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="label"></div>
         <!-- тут блок вадидации имени -->
     </div>
-    <div class="formToFillBook">
+    <div class="formToFill">
         <label for="author_input" class="label">Book`s author</label>
         <input type="text" th:field="*{author}" id="author_input">
         <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>

@@ -38,12 +38,10 @@ public class User {
 
 
     @Column(name = "login")
-    @NotEmpty(message = "Login shouldn`t be empty")
     @Size(min = 4, max = 30, message = "Login`s length should be bigger than 4, and less than 30")
     private String login;
 
     @Column(name = "password")
-    @NotEmpty(message = "Password mustn`t be empty")
     private String password;
 
 

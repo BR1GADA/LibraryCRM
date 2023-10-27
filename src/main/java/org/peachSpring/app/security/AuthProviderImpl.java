@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -16,9 +17,11 @@ import java.util.Collections;
 public class AuthProviderImpl implements AuthenticationProvider {
 
     private final UsersDetailsService usersDetailsService;
+    private final PasswordEncoderImpl passwordEncoder;
     @Autowired
-    public AuthProviderImpl(UsersDetailsService usersDetailsService) {
+    public AuthProviderImpl(UsersDetailsService usersDetailsService, PasswordEncoderImpl passwordEncoder) {
         this.usersDetailsService = usersDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -26,7 +29,9 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String login = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails curUser = usersDetailsService.loadUserByUsername(login);
-        if (!password.equals(curUser.getPassword())){
+        System.out.println(passwordEncoder.encode("rar"));
+        System.out.println(passwordEncoder.encode("qqq"));
+        if (!passwordEncoder.matches(password,curUser.getPassword())){
             throw new BadCredentialsException("Password is incorrect");
         }
         return new UsernamePasswordAuthenticationToken(curUser,

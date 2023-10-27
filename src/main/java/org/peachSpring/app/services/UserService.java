@@ -65,5 +65,8 @@ public class UserService {
     public Optional<User> findOneByNameIgnoreCase(String name){
         return usersRepository.findFirstByNameIgnoreCase(name);
     }
+    public Optional<User> findOneByLogin(String login){
+        return usersRepository.findByLogin(login);
+    }
 
 }

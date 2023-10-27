@@ -8,7 +8,8 @@
     margin: 10px;
 
 }
-.formToFillBook{
+
+.formToFill{
     margin-bottom: 20px;
     display: flex;
     justify-content: flex-start;
@@ -27,6 +28,16 @@
     border-radius: 3px;
     margin-bottom: 5px;/* Скругляем уголки */
     margin-right: 20px;
+}
+.eachUser {
+    cursor: pointer;
+    color: #ffffff; /* Белый цвет текста */
+    background: #000000;
+    display: block;
+    padding: 1rem 1.5rem;
+    margin-bottom: 10px;
+    text-decoration: none;
+    width: 5%;
 }
 .field {
     text-decoration: underline overline;
