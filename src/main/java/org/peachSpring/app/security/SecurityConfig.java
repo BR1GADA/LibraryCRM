@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.stereotype.Component;
 
 @EnableWebSecurity
@@ -22,15 +23,23 @@ public class SecurityConfig  {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
                 .authorizeHttpRequests((authorize)->authorize.requestMatchers(
                         "/auth/login",
                                 "/styles/styleForAuth.css",
                                 "/styles/styleForRegistration.css",
                                 "/auth/registration")
                         .permitAll()
+                        .requestMatchers(
+                                new RegexRequestMatcher("/", "GET"),
+                                new RegexRequestMatcher("/styles/.*", "GET"))
+                        .authenticated()
+                        .requestMatchers(
+                                new RegexRequestMatcher("/books/chooseBook.*", "GET"),
+                                new RegexRequestMatcher("/books/requestToReserveBook.*", "GET"))
+                        .hasRole("USER")
                         .anyRequest()
-                        .authenticated())
+                        .hasRole("ADMIN"))
 
                 .formLogin(form->form.loginPage("/auth/login")
                         .loginProcessingUrl("/login")

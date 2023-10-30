@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<header th:insert = "fragments/components :: header"></header>
+<header th:insert = "fragments/components :: headerForUsers"></header>
 <body>
 
 <div>
-  <form th:method="get" th:action="@{/books}">
+  <form th:method="get" th:action="@{/books/chooseBook}">
     <div th:insert = "fragments/components :: configSelector"></div>
   </form>
 </div>
@@ -21,8 +21,8 @@
       <div th:if="${allBooks.isEmpty()}">
         <h3 class="label" th:text="'Sorry, but results by this search configuration weren`t founded'"></h3>
       </div>
-      <div th:each="book : ${allBooks}" class="col-xl-3 col-lg-4 col-md-6">
-        <a th:href="@{/books/{id}(id=${book.getId()})}" class="eachBook gallery-item h-100" th:text="${book.getName()}"></a>
+      <div  th:each="book : ${allBooks}" th:if="${not book.isIstaken()}" class="col-xl-3 col-lg-4 col-md-6">
+        <a th:href="@{/books/chooseBook/{id}(id=${book.getId()})}" class="eachBook gallery-item h-100" th:text="${book.getName()}"></a>
       </div>
 
     </div>
@@ -32,10 +32,7 @@
 
 <hr>
 <div style="display: flex ; flex-wrap: wrap;flex-direction: column;align-items: center;">
-  <div style="margin: auto"  th:insert = "fragments/components :: selectorOfBooksPages"/>
-  <div>
-    <a style="margin: auto" th:href="@{/books/new}" class="btn">Adding</a>
-  </div>
+  <div style="margin: auto"  th:insert = "fragments/components :: selectorOfBooksPagesForUsers"/>
 </div>
 
 

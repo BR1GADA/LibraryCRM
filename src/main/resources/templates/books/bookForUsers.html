@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${curBook.getId()}"></title>
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css"/>
+</head>
+<header th:insert="fragments/components :: headerForUsers"></header>
+<body>
+<div>
+    <p th:text="'| '+${curBook.getName()}+' |'" class="field"></p>
+    <p th:text="'| '+${curBook.getYear()}+' |'" class="field"></p>
+    <p th:text="'| '+${curBook.getAuthor()}+' |'" class="field"></p>
+</div>
+<div class="spanOfButtons">
+    <form th:method="GET" th:action="@{/books/requestToReserveBook/{id}(id = ${curBook.getId()})}">
+        <input type="submit" value="Request to reserve book" class="btn">
+    </form>
+
+</div>
+</body>
+</html>

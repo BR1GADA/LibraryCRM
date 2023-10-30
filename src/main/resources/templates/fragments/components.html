@@ -17,7 +17,23 @@
             <a th:href="@{/users/new}" th:text="'Add new User'" class="navBarButton"></a>
             <a th:href="@{/books/new}"  th:text="'Add new Book'" class="navBarButton"></a>
         </div>
-        <a th:href="@{/logout}" th:text="'Logout'" class="navBarButton"></a>
+        <form th:method="POST" th:action="@{/logout}">
+            <input style="cursor: pointer" type="submit" th:value="'Logout'" class="navBarButton">
+        </form>
+    </div>
+
+    <hr>
+</div>
+<div th:fragment="headerForUsers"  >
+    <hr>
+    <div class="row" style="margin: auto; width: 100%; display: flex;justify-content: space-between">
+        <div class="row">
+            <a th:href="@{/}" th:text="'Main page'" class="navBarButton"></a>
+            <a th:href="@{/books/chooseBook}" th:text="'Show all books'" class="navBarButton"> </a>
+        </div>
+        <form th:method="POST" th:action="@{/logout}">
+            <input style="cursor: pointer" type="submit" th:value="'Logout'" class="navBarButton">
+        </form>
     </div>
 
     <hr>
@@ -29,6 +45,12 @@
     <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:text="${numberOfPage + 1}"></a>
     <a  th:href="@{/books(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
+</div>
+<div th:fragment="selectorOfBooksPagesForUsers" style="display: flex ;align-items: center;">
+    <a  th:if="${numberOfPage>0}" th:href="@{/books/chooseBook(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
+    <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
+    <a  th:text="${numberOfPage + 1}"></a>
+    <a  th:href="@{/books/chooseBook(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
 </div>
 
 

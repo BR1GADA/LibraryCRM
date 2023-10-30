@@ -15,12 +15,12 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotEmpty(message =  "Name shouldn't be empty")
+    @NotEmpty(message = "Name shouldn't be empty")
     @Size(min = 2, max = 50, message = "Invalid size of name")
     @Column(name = "name")
-    @Pattern(regexp = "[a-zA-Zа-яА-Я `.\\-]+" , message = "Name should contains only letters")
+    @Pattern(regexp = "[a-zA-Zа-яА-Я `.\\-]+", message = "Name should contains only letters")
     private String name;
-    @NotEmpty (message =  "Address shouldn't be empty")
+    @NotEmpty(message = "Address shouldn't be empty")
     @Pattern(regexp = "[A-ZА-Я]\\w+, [A-ZА-Я]\\w+, \\d{6}", message = "Your address should be like this: \"Country, City, 000000\"")
     @Column(name = "address")
     private String address;
@@ -44,6 +44,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
 
 
     public User(long id, String name, String email) {
@@ -137,5 +139,13 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -57,6 +57,7 @@ public class AuthController {
         }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setRole("ROLE_USER");
         userService.save(user);
         return "redirect:/auth/login";
 

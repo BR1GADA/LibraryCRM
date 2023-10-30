@@ -36,7 +36,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         }
         return new UsernamePasswordAuthenticationToken(curUser,
                 password,
-                Collections.emptyList());
+                curUser.getAuthorities());
 
     }
 

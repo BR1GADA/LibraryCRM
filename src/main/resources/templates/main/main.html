@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>Library CRM</title>
 </head>
-<header th:insert = "fragments/components :: header"></header>
+<header th:if="${usersRole} == ROLE_ADMIN" th:insert = "fragments/components :: header"></header>
+<header th:if="${usersRole} == ROLE_USER" th:insert = "fragments/components :: headerForUsers"></header>
 <body>
 <h2 style="text-align: center!important;
     margin: auto;
