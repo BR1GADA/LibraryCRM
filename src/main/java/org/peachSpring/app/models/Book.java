@@ -3,6 +3,7 @@ package org.peachSpring.app.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.peachSpring.app.util.constants.Genres;
 
 import java.util.List;
 
@@ -32,16 +33,23 @@ public class Book {
     @Column(name = "istaken")
     private boolean istaken;
 
+    @Column(name = "genre")
+    @Enumerated(EnumType.STRING)
+    private Genres genre;
+
     @ManyToMany
     @JoinTable(name = "users_books",
     joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
-    public Book(String name, int year, String author) {
+
+
+    public Book(String name, int year, String author, Genres genre) {
         this.name = name;
         this.year = year;
         this.author = author;
+        this.genre = genre;
     }
 
     public Book() {
@@ -93,5 +101,12 @@ public class Book {
 
     public void setIstaken(boolean istaken) {
         this.istaken = istaken;
+    }
+    public Genres getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genres genre) {
+        this.genre = genre;
     }
 }

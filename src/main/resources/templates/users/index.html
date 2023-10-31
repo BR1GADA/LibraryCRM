@@ -19,9 +19,20 @@
 </div>
 
 
-<div th:each="user : ${users}">
-  <a class="eachUser" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"></a>
-</div>
+
+<section class="gallery">
+    <div class="container-fluid">
+        <div class="row gy-4 justify-content-center">
+            <div th:if="${users.isEmpty()}">
+                <h3 class="label" th:text="'Sorry, but results by this search configuration weren`t founded'"></h3>
+            </div>
+            <div th:each="user : ${users}" class="col-xl-3 col-lg-4 col-md-6">
+                <a class="eachBook gallery-item h-100" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getName()}"></a>
+            </div>
+
+        </div>
+    </div>
+</section>
 <hr>
 
 

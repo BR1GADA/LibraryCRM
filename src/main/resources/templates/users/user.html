@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <link th:href="@{/styles/styleForUser.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8">
     <title th:text="${id}"></title>
 </head>
 <header th:insert = "fragments/components :: header"></header>
 <body>
-<div>
+<div >
     <p th:text="'| '+${user.getName()}+' |'" class="field"></p>
-    <p th:text="'| Is has book: '+${user.isHasBook()}+' |'" class="field"></p>
+    <div  >
+        <p class="field" th:text="'| Is has book: '+${user.isHasBook()}+' |'"></p>
+        <div style="display: flex;justify-content: flex-start;"  th:if="${user.isHasBook()}" class="field">
+            <p  th:text="'Name is'"></p>
+            <a style="margin-top: auto; margin-bottom: auto; margin-left: 10px"  th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName()}"></a>
+        </div>
+
+    </div>
+
     <p th:if="${user.getGender()!=null}" th:text="'| Gender: '+${user.getGender()} + ' |'"></p>
 </div>
 <div class="spanOfButtons">

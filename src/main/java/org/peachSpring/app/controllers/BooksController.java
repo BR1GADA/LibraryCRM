@@ -11,6 +11,7 @@ import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.services.BookService;
 import org.peachSpring.app.services.BooksUsersService;
 import org.peachSpring.app.services.UserService;
+import org.peachSpring.app.util.constants.Genres;
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.validators.BookValidator;
@@ -88,7 +89,9 @@ public class BooksController {
     }
 
     @GetMapping("/new")
-    public String requestToAddNewBook(@ModelAttribute("bookToAdd") Book book){
+    public String requestToAddNewBook(Model model,
+                                      @ModelAttribute("bookToAdd") Book book){
+        model.addAttribute("genres", Genres.values());
         return "books/new";
     }
 
@@ -160,6 +163,7 @@ public class BooksController {
             e.printStackTrace();
             return "errors/bookNotFound";
         }
+        model.addAttribute("genres", Genres.values());
         return "books/edit";
     }
 

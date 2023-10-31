@@ -17,6 +17,7 @@ public class MainController {
         UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
         User curUser = usersDetails.getOrigin();
         model.addAttribute("usersRole", curUser.getRole());
+        model.addAttribute("usersName", curUser.getName());
         return "main/main";
     }
 

@@ -27,6 +27,9 @@ public class BooksUsersService {
     public Book_User findFirstByBookIdOrderByTimeDesc(long bookId) {
         return booksUsersRepository.findFirstByBookIdOrderByTimeDesc(bookId);
     }
+    public Book_User findFirstByUserIdOrderByTimeDesc(long userId){
+        return booksUsersRepository.findFirstByUserIdOrderByTimeDesc(userId);
+    }
 
     @Transactional
     public void appointBook(User user, long bookId) {

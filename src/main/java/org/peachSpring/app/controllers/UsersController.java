@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import org.peachSpring.app.exceptions.CannotDeleteUserException;
 import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
+import org.peachSpring.app.services.BookService;
+import org.peachSpring.app.services.BooksUsersService;
 import org.peachSpring.app.services.UserService;
 import org.peachSpring.app.util.constants.Gender;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
@@ -24,11 +26,15 @@ public class UsersController {
 
     private final UserOfflineValidator userOfflineValidator;
     private final UserService userService;
+    private final BooksUsersService booksUsersService;
+    private final BookService bookService;
 
-    public UsersController(UserOfflineValidator userOfflineValidator, UserService userService) {
+    public UsersController(UserOfflineValidator userOfflineValidator, UserService userService, BooksUsersService booksUsersService, BookService bookService) {
 
         this.userOfflineValidator = userOfflineValidator;
         this.userService = userService;
+        this.booksUsersService = booksUsersService;
+        this.bookService = bookService;
     }
 
     @GetMapping()
@@ -55,8 +61,17 @@ public class UsersController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model){
         try {
+            User curUser = userService.findOne(id);
             model.addAttribute("id",id);
-            model.addAttribute("user", userService.findOne(id));
+            model.addAttribute("user", curUser);
+            if (curUser.isHasBook()){
+                model.addAttribute("book", bookService
+                        .findOne(
+                                booksUsersService
+                                    .findFirstByUserIdOrderByTimeDesc(curUser.getId())
+                                    .getBook_id())
+                );
+            }
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             return "errors/userNotFound";

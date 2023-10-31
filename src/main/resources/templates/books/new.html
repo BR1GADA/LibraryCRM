@@ -26,6 +26,13 @@
         <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>
         <!-- тут блок вадидации имени -->
     </div>
+    <div class="formToFill">
+        <label for="genre" class="label">GENRE</label>
+        <select th:field="*{genre}" id="genre">
+            <option th:each="g : ${genres}" th:value="${g}" th:text="${g.toString()}">
+            </option>
+        </select>
+    </div>
     <input type="submit" value="Add new book" class="btn">
 </form>
 </body>

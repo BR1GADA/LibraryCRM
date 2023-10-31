@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
     <title>Library CRM</title>
 </head>
-<header th:if="${usersRole} == ROLE_ADMIN" th:insert = "fragments/components :: header"></header>
-<header th:if="${usersRole} == ROLE_USER" th:insert = "fragments/components :: headerForUsers"></header>
+<header th:if="${usersRole} == ROLE_ADMIN" th:insert="fragments/components :: header"></header>
+<header th:if="${usersRole} == ROLE_USER" th:insert="fragments/components :: headerForUsers"></header>
 <body>
-<h2 style="text-align: center!important;
+<div th:if="${usersRole} == ROLE_ADMIN">
+    <h2 style="text-align: center!important;
     margin: auto;
     font-size: 38px;
     font-weight: 700;
     color: #000000;
     font-family: 'Montserrat SemiBold', sans-serif;">Library CRM</h2>
+</div>
+<div th:if="${usersRole} == ROLE_USER">
+    <h2 style="text-align: center!important;
+    margin: auto;
+    font-size: 38px;
+    font-weight: 700;
+    color: #000000;
+    font-family: 'Montserrat SemiBold', sans-serif;">Library</h2>
+</div>
+<h3 style="margin: auto;
+color: #000000;
+text-align: center!important;
+font-family: 'Montserrat SemiBold', sans-serif;" th:text="'Welcome, ' + ${usersName} + '!'"></h3>
+
 </body>
 </html>

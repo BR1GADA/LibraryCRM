@@ -24,6 +24,13 @@
           <input type="text" th:field="*{author}" id="authorInput">
           <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>
       </div>
+      <div class="formToFill">
+          <label for="genre" class="label">GENRE</label>
+          <select th:field="*{genre}" id="genre">
+              <option th:each="g : ${genres}" th:value="${g}" th:text="${g.toString()}">
+              </option>
+          </select>
+      </div>
       <input type="submit" class="btn" value="Update Book">
   </form>
 </body>

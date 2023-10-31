@@ -2,6 +2,8 @@ package org.peachSpring.app.security;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,7 +30,9 @@ public class SecurityConfig  {
                         "/auth/login",
                                 "/styles/styleForAuth.css",
                                 "/styles/styleForRegistration.css",
-                                "/auth/registration")
+                                "/auth/registration",
+                                "/error",
+                                "/images/error-404.png")
                         .permitAll()
                         .requestMatchers(
                                 new RegexRequestMatcher("/", "GET"),
