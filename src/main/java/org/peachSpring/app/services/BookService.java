@@ -3,6 +3,7 @@ package org.peachSpring.app.services;
 import org.peachSpring.app.exceptions.BookNotFoundException;
 import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
+import org.peachSpring.app.models.User;
 import org.peachSpring.app.repositories.BooksRepository;
 import org.peachSpring.app.util.advanced_search.SearcherChain;
 import org.peachSpring.app.util.advanced_search.BookFilterSearcherChain;
@@ -57,10 +58,12 @@ public class BookService {
         }
     }
     public List<Book> getBooks(BookSearchConfig searchConfig){
-        List<Book> list = booksRepository.findAll(PageRequest.of(
-                searchConfig.getNumberOfPage(),
-                searchConfig.getItemsPerPage())).getContent();
-        return new BookFilterSearcherChain(searchConfig).searcherManager(list);
+        List<Book> list = new BookFilterSearcherChain(searchConfig)
+                .searcherManager(booksRepository.findAll())
+                .stream()
+                .skip(searchConfig.getNumberOfPage()*searchConfig.getItemsPerPage())
+                .toList();
+        return list.subList(0,Math.min(list.size(), searchConfig.getItemsPerPage()));
     }
 
     public int getLastPageIndex() {

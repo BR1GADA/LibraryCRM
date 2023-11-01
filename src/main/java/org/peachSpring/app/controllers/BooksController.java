@@ -96,11 +96,13 @@ public class BooksController {
     }
 
     @PostMapping()
-    public String addNewBook(@ModelAttribute("bookToAdd") @Valid Book book,
+    public String addNewBook(Model model,
+                             @ModelAttribute("bookToAdd") @Valid Book book,
                              BindingResult bindingResult){
         System.out.println(book.getYear());
         bookValidator.validate(book,bindingResult);
         if (bindingResult.hasErrors()){
+            model.addAttribute("genres", Genres.values());
             return "books/new";
         }
         bookService.save(book);
