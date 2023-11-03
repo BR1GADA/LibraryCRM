@@ -12,10 +12,10 @@ public class UserFinderSearcherChain extends SearcherChain<User>{
         super(searchConfig);
     }
 
-    @Override
+    /*@Override
     public void setNextSearcherChain(SearcherChain<User> searcherChain) {
         super.setNextSearcherChain(searcherChain);
-    }
+    }*/
 
     @Override
     protected List<User> getItems(List<User> list) {

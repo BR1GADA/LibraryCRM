@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/books")
-public class BooksController {
+public class BooksControllerForAdmin {
 
     private final UserService userService;
     private final BookService bookService;
@@ -36,7 +36,7 @@ public class BooksController {
     private final BookValidator bookValidator;
 
     @Autowired
-    public BooksController(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator) {
+    public BooksControllerForAdmin(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator) {
         this.userService = userService1;
         this.bookService = bookService1;
         this.booksUsersService = booksUsersService;
@@ -65,28 +65,7 @@ public class BooksController {
         model.addAttribute("stringToFind", searchConfig.getStringToFind());
         return "books/index";
     }
-    @GetMapping("/chooseBook")
-    public String indexForUsers(HttpServletRequest httpServletRequest,
-                                Model model,
-                                @ModelAttribute("searchConfig") BookSearchConfig searchConfig){
-        int booksPerPage = 16;
-        int numberOfPage = 0;
-        try {
-            numberOfPage = Integer.parseInt(httpServletRequest.getParameter("page"));
-            if (numberOfPage<0){
-                numberOfPage = 0;
-            }
-        } catch (NumberFormatException ignore) {}
-        searchConfig.setItemsPerPage(booksPerPage);
-        searchConfig.setNumberOfPage(numberOfPage);
-        model.addAttribute("filters", BookFilter.values());
-        model.addAttribute("filter", searchConfig.getFilter());
-        model.addAttribute("allBooks", bookService.getBooks(searchConfig));
-        model.addAttribute("numberOfPage", numberOfPage);
-        model.addAttribute("stringToFind", searchConfig.getStringToFind());
-        return "books/indexForUsers";
 
-    }
 
     @GetMapping("/new")
     public String requestToAddNewBook(Model model,
@@ -125,35 +104,8 @@ public class BooksController {
         }
         return "books/book";
     }
-    @GetMapping("/chooseBook/{id}")
-    public String getOneBookForUsers(@PathVariable("id") long id, Model model){
-        Book curBook = null;
-        try {
-            curBook = bookService.findOne(id);
-        } catch (BookNotFoundException e) {
-            e.printStackTrace();
-            return "errors/bookNotFound";
-        }
-        model.addAttribute("curBook",curBook);
-        return "books/bookForUsers";
-    }
-    @GetMapping("/requestToReserveBook/{id}")
-    public String requestToReserveBook(@PathVariable("id") long id, Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        User curUser = usersDetails.getOrigin();
-        if (userService.findOne(curUser.getId()).isHasBook()){
-            model.addAttribute("answer", "You have already taken the book, please return it to library," +
-                    " and then you can take new one");
-        } else if(bookService.findOne(id).isIstaken())
-        {
-            model.addAttribute("answer", "This book is already taken");
-        }
-        else {
-            model.addAttribute("answer", "ok");
-        }
-        return "books/reservingPage";
-    }
+
+
 
 
     @GetMapping("/{id}/edit")

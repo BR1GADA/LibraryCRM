@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public List<User> findAll(UserSearchConfig userSearchConfig) {
-        //фильтрация не работает корректно//
+
 
         List<User> list = new UserFilterSearcherChain(userSearchConfig)
                 .searcherManager(usersRepository.findAll())

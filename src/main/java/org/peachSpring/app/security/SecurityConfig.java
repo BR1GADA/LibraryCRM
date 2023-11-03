@@ -34,6 +34,8 @@ public class SecurityConfig  {
                                 "/error",
                                 "/images/error-404.png")
                         .permitAll()
+                        .requestMatchers(new RegexRequestMatcher("/\\?continue", "GET"))
+                        .authenticated()
                         .requestMatchers(
                                 new RegexRequestMatcher("/", "GET"),
                                 new RegexRequestMatcher("/styles/.*", "GET"))

@@ -19,7 +19,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BookService {
     private final BooksRepository booksRepository;
-    private static int lastPageIndex = -1;
 
     public BookService(BooksRepository booksRepository) {
         this.booksRepository = booksRepository;
@@ -66,7 +65,5 @@ public class BookService {
         return list.subList(0,Math.min(list.size(), searchConfig.getItemsPerPage()));
     }
 
-    public int getLastPageIndex() {
-        return lastPageIndex;
-    }
+
 }
