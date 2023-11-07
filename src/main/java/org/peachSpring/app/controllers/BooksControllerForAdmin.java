@@ -11,7 +11,7 @@ import org.peachSpring.app.services.BookService;
 import org.peachSpring.app.services.BooksUsersService;
 import org.peachSpring.app.services.GenresService;
 import org.peachSpring.app.services.UserService;
-import org.peachSpring.app.util.constants.Genres;
+
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.validators.BookValidator;
@@ -117,7 +117,7 @@ public class BooksControllerForAdmin {
             e.printStackTrace();
             return "errors/bookNotFound";
         }
-        model.addAttribute("genres", Genres.values());
+        model.addAttribute("genres", genresService.findAll());
         return "books/edit";
     }
 

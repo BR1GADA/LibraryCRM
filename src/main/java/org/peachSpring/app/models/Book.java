@@ -4,7 +4,7 @@ package org.peachSpring.app.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.Fetch;
-import org.peachSpring.app.util.constants.Genres;
+
 
 import java.util.List;
 
