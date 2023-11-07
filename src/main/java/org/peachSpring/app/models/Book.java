@@ -3,6 +3,7 @@ package org.peachSpring.app.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.Fetch;
 import org.peachSpring.app.util.constants.Genres;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class Book {
     private long id;
     @Column(name = "name")
     @NotEmpty(message = "name shouldn`t be empty")
-    @Pattern(regexp = "[a-zA-Zа-яА-Я `:.\\-]+" , message = "Name should contains only letters")
+    @Pattern(regexp = "[0-9a-zA-Zа-яА-Я \"`:.\\-]+" , message = "Name should contains only letters")
     private String name;
     @Column(name = "year")
     @Positive(message = "year should be greater than 0")
@@ -33,9 +34,10 @@ public class Book {
     @Column(name = "istaken")
     private boolean istaken;
 
-    @Column(name = "genre")
-    @Enumerated(EnumType.STRING)
-    private Genres genre;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre", referencedColumnName = "id")
+    private Genre genre;
 
     @ManyToMany
     @JoinTable(name = "users_books",
@@ -45,7 +47,7 @@ public class Book {
 
 
 
-    public Book(String name, int year, String author, Genres genre) {
+    public Book(String name, int year, String author, Genre genre) {
         this.name = name;
         this.year = year;
         this.author = author;
@@ -102,11 +104,12 @@ public class Book {
     public void setIstaken(boolean istaken) {
         this.istaken = istaken;
     }
-    public Genres getGenre() {
+
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(Genres genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 }

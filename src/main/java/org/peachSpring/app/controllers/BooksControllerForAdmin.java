@@ -7,17 +7,15 @@ import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
 import org.peachSpring.app.models.Book_User;
 import org.peachSpring.app.models.User;
-import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.services.BookService;
 import org.peachSpring.app.services.BooksUsersService;
+import org.peachSpring.app.services.GenresService;
 import org.peachSpring.app.services.UserService;
 import org.peachSpring.app.util.constants.Genres;
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.validators.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,14 +32,16 @@ public class BooksControllerForAdmin {
     private final BooksUsersService booksUsersService;
 
     private final BookValidator bookValidator;
+    private final GenresService genresService;
 
     @Autowired
-    public BooksControllerForAdmin(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator) {
+    public BooksControllerForAdmin(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator, GenresService genresService) {
         this.userService = userService1;
         this.bookService = bookService1;
         this.booksUsersService = booksUsersService;
         this.bookValidator = bookValidator;
 
+        this.genresService = genresService;
     }
 
     @GetMapping()
@@ -70,7 +70,7 @@ public class BooksControllerForAdmin {
     @GetMapping("/new")
     public String requestToAddNewBook(Model model,
                                       @ModelAttribute("bookToAdd") Book book){
-        model.addAttribute("genres", Genres.values());
+        model.addAttribute("genres", genresService.findAll());
         return "books/new";
     }
 
@@ -81,7 +81,7 @@ public class BooksControllerForAdmin {
         System.out.println(book.getYear());
         bookValidator.validate(book,bindingResult);
         if (bindingResult.hasErrors()){
-            model.addAttribute("genres", Genres.values());
+            model.addAttribute("genres", genresService.findAll());
             return "books/new";
         }
         bookService.save(book);
