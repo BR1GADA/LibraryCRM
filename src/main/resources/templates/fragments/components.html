@@ -8,35 +8,34 @@
 
 
 <div th:fragment="header"  >
-    <hr>
-    <div class="row" style="margin: auto; width: 100%; display: flex;justify-content: space-between">
-        <div class="row">
-            <a th:href="@{/}" th:text="'Main page'" class="navBarButton"></a>
-            <a th:href="@{/books}" th:text="'Show all books'" class="navBarButton"> </a>
-            <a th:href="@{/users}" th:text="'Show all users'" class="navBarButton"></a>
-            <a th:href="@{/users/new}" th:text="'Add new User'" class="navBarButton"></a>
-            <a th:href="@{/books/new}"  th:text="'Add new Book'" class="navBarButton"></a>
-        </div>
-        <form th:method="POST" th:action="@{/logout}">
-            <input style="cursor: pointer" type="submit" th:value="'Logout'" class="navBarButton">
-        </form>
-    </div>
+    <nav id="colorlib-main-menu" role="navigation">
+        <ul>
+            <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
+            <li><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+            <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+            <li> <a th:href="@{/users/new}" th:text="'Add new User'" ></a></li>
+            <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+            <li>
+                <form th:method="POST" th:action="@{/logout}">
+                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
+                </form>
+            </li>
+        </ul>
+    </nav>
 
-    <hr>
 </div>
 <div th:fragment="headerForUsers"  >
-    <hr>
-    <div class="row" style="margin: auto; width: 100%; display: flex;justify-content: space-between">
-        <div class="row">
-            <a th:href="@{/}" th:text="'Main page'" class="navBarButton"></a>
-            <a th:href="@{/books/chooseBook}" th:text="'Show all books'" class="navBarButton"> </a>
-        </div>
-        <form th:method="POST" th:action="@{/logout}">
-            <input style="cursor: pointer" type="submit" th:value="'Logout'" class="navBarButton">
-        </form>
-    </div>
-
-    <hr>
+    <nav id="colorlib-main-menu" role="navigation">
+        <ul>
+            <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
+            <li><a th:href="@{/books/chooseBook}" th:text="'Show all books'"> </a></li>
+            <li>
+                <form th:method="POST" th:action="@{/logout}">
+                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
+                </form>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 

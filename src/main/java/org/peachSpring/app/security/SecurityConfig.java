@@ -31,10 +31,10 @@ public class SecurityConfig  {
                                 "/styles/styleForAuth.css",
                                 "/styles/styleForRegistration.css",
                                 "/auth/registration",
-                                "/error",
-                                "/images/error-404.png")
+                                "/error")
                         .permitAll()
-                        .requestMatchers(new RegexRequestMatcher("/\\?continue", "GET"))
+                        .requestMatchers(new RegexRequestMatcher("/\\?continue", "GET"),
+                                        new RegexRequestMatcher("/images/.*", "GET"))
                         .authenticated()
                         .requestMatchers(
                                 new RegexRequestMatcher("/", "GET"),
