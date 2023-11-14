@@ -1,26 +1,21 @@
 package org.peachSpring.app.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.peachSpring.app.exceptions.BookNotFoundException;
-import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
-import org.peachSpring.app.models.Book_User;
 import org.peachSpring.app.models.User;
 import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.services.BookService;
-import org.peachSpring.app.services.BooksUsersService;
+import org.peachSpring.app.services.GenresService;
 import org.peachSpring.app.services.UserService;
 
 import org.peachSpring.app.util.search_config.BookSearchConfig;
 import org.peachSpring.app.util.search_config.constants.BookFilter;
-import org.peachSpring.app.util.validators.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,12 +26,14 @@ public class BooksControllerForUser {
 
     private final UserService userService;
     private final BookService bookService;
+    private final GenresService genresService;
 
 
     @Autowired
-    public BooksControllerForUser(UserService userService1, BookService bookService1) {
+    public BooksControllerForUser(UserService userService1, BookService bookService1, GenresService genresService) {
         this.userService = userService1;
         this.bookService = bookService1;
+        this.genresService = genresService;
     }
 
 
@@ -54,11 +51,18 @@ public class BooksControllerForUser {
         } catch (NumberFormatException ignore) {}
         searchConfig.setItemsPerPage(booksPerPage);
         searchConfig.setNumberOfPage(numberOfPage);
+        searchConfig.setGenre(httpServletRequest.getParameter("genre"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
+        User curUser = usersDetails.getOrigin();
+        model.addAttribute("genre", searchConfig.getGenre());
+        model.addAttribute("usersName", curUser.getName());
         model.addAttribute("filters", BookFilter.values());
         model.addAttribute("filter", searchConfig.getFilter());
         model.addAttribute("allBooks", bookService.getBooks(searchConfig));
         model.addAttribute("numberOfPage", numberOfPage);
-        model.addAttribute("stringToFind", searchConfig.getStringToFind());
+        model.addAttribute("stringToFind", httpServletRequest.getParameter("stringToFind"));
+        model.addAttribute("genres", genresService.findAll());
         return "books/indexForUsers";
 
     }

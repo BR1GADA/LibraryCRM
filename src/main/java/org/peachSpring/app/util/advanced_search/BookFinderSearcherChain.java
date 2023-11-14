@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class BookFinderSearcherChain extends SearcherChain<Book> {
     public BookFinderSearcherChain(BookSearchConfig bookSearchConfig) {
         super(bookSearchConfig);
+        this.setNextSearcherChain(new BookGenreSearcherChain(bookSearchConfig));
     }
 
     @Override

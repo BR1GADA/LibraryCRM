@@ -34,7 +34,6 @@ public class Book {
     @Column(name = "istaken")
     private boolean istaken;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre", referencedColumnName = "id")
     private Genre genre;
@@ -46,6 +45,16 @@ public class Book {
     private List<User> users;
 
 
+    @Column(name = "image")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Book(String name, int year, String author, Genre genre) {
         this.name = name;
