@@ -5,17 +5,18 @@ import jakarta.validation.Valid;
 import org.peachSpring.app.exceptions.BookNotFoundException;
 import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
-import org.peachSpring.app.models.Book_User;
 import org.peachSpring.app.models.User;
+import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.services.BookService;
 import org.peachSpring.app.services.BooksUsersService;
 import org.peachSpring.app.services.GenresService;
 import org.peachSpring.app.services.UserService;
 
 import org.peachSpring.app.util.search_config.BookSearchConfig;
-import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.validators.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/books")
-public class BooksControllerForAdmin {
+public class BooksController {
 
     private final UserService userService;
     private final BookService bookService;
@@ -35,7 +36,7 @@ public class BooksControllerForAdmin {
     private final GenresService genresService;
 
     @Autowired
-    public BooksControllerForAdmin(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator, GenresService genresService) {
+    public BooksController(UserService userService1, BookService bookService1, BooksUsersService booksUsersService, BookValidator bookValidator, GenresService genresService) {
         this.userService = userService1;
         this.bookService = bookService1;
         this.booksUsersService = booksUsersService;
@@ -48,7 +49,7 @@ public class BooksControllerForAdmin {
     public String booksIndex(HttpServletRequest httpServletRequest,
                              Model model,
                              @ModelAttribute("searchConfig") BookSearchConfig searchConfig){
-        int booksPerPage = 16;
+
         int numberOfPage = 0;
         try {
             numberOfPage = Integer.parseInt(httpServletRequest.getParameter("page"));
@@ -56,13 +57,17 @@ public class BooksControllerForAdmin {
                 numberOfPage = 0;
             }
         } catch (NumberFormatException ignore) {}
-        searchConfig.setItemsPerPage(booksPerPage);
         searchConfig.setNumberOfPage(numberOfPage);
-        model.addAttribute("filters", BookFilter.values());
-        model.addAttribute("filter", searchConfig.getFilter());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
+        User curUser = usersDetails.getOrigin();
+        model.addAttribute("genre", searchConfig.getGenre());
+        model.addAttribute("usersName", curUser.getName());
         model.addAttribute("allBooks", bookService.getBooks(searchConfig));
         model.addAttribute("numberOfPage", numberOfPage);
-        model.addAttribute("stringToFind", searchConfig.getStringToFind());
+        model.addAttribute("stringToFind", httpServletRequest.getParameter("stringToFind"));
+        model.addAttribute("genres", genresService.findAll());
+        model.addAttribute("usersRole", curUser.getRole());
         return "books/index";
     }
 
@@ -96,12 +101,12 @@ public class BooksControllerForAdmin {
             e.printStackTrace();
             return "errors/bookNotFound";
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
+        User curUser = usersDetails.getOrigin();
         model.addAttribute("curBook",curBook);
-        if (curBook.isIstaken()) {
-            Book_User book_user = booksUsersService.findFirstByBookIdOrderByTimeDesc(id);
-            User curUser = userService.findOne(book_user.getUserId());
-            model.addAttribute("curUser", curUser);
-        }
+        model.addAttribute("usersName", curUser.getName());
+        model.addAttribute("usersRole", curUser.getRole());
         return "books/book";
     }
 

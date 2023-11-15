@@ -33,19 +33,16 @@ public class SecurityConfig  {
                                 "/auth/registration",
                                 "/error")
                         .permitAll()
-                        .requestMatchers(new RegexRequestMatcher("/\\?continue", "GET"),
-                                        new RegexRequestMatcher("/images/.*", "GET"),
+                        .requestMatchers(
+                                new RegexRequestMatcher("/", "GET"),
+                                new RegexRequestMatcher("/styles/.*", "GET"),
+                                new RegexRequestMatcher("/books.*", "GET"),
+                                new RegexRequestMatcher("/\\?continue", "GET"),
+                                new RegexRequestMatcher("/images/.*", "GET"),
+                                new RegexRequestMatcher("/js/.*", "GET"),
                                 new RegexRequestMatcher("/fonts/.*", "GET"),
                                 new RegexRequestMatcher("/favicon/.*","GET"))
                         .authenticated()
-                        .requestMatchers(
-                                new RegexRequestMatcher("/", "GET"),
-                                new RegexRequestMatcher("/styles/.*", "GET"))
-                        .authenticated()
-                        .requestMatchers(
-                                new RegexRequestMatcher("/books/chooseBook.*", "GET"),
-                                new RegexRequestMatcher("/books/requestToReserveBook.*", "GET"))
-                        .hasRole("USER")
                         .anyRequest()
                         .hasRole("ADMIN"))
 

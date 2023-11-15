@@ -4,14 +4,33 @@
 <body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
     <div id="colorlib-page">
         <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
-            <div th:if="${usersRole} == ROLE_USER" th:insert="fragments/components :: headerForUsers"></div>
-            <div th:if="${usersRole} == ROLE_ADMIN" th:insert="fragments/components :: header"></div>
+            <div th:if="${usersRole} == ROLE_USER">
+                <nav id="colorlib-main-menu" role="navigation">
+                    <ul>
+                        <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
+                        <li><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div th:if="${usersRole} == ROLE_ADMIN">
+                <nav id="colorlib-main-menu" role="navigation">
+                    <ul>
+                        <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
+                        <li><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+                        <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+                        <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+                    </ul>
+                </nav>
+            </div>
             <div class="colorlib-footer">
                 <div id="colorlib-logo" class="mb-4">
-                    <a href="index.html" style="background-image: url(/images/bg_1.jpg);">Welcome,
+                    <a href="/" style="background-image: url(/images/bg_1.jpg);">Welcome,
                         <span th:text="${usersName}"></span>
                     </a>
                 </div>
+                <form th:method="POST" th:action="@{/logout}">
+                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
+                </form>
             </div>
         </aside>
         <div id="colorlib-main">

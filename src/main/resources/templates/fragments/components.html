@@ -29,51 +29,21 @@
 </div>
 
 
-<div th:fragment="header"  >
-    <nav id="colorlib-main-menu" role="navigation">
-        <ul>
-            <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
-            <li><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
-            <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
-            <li> <a th:href="@{/users/new}" th:text="'Add new User'" ></a></li>
-            <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
-            <li>
-                <form th:method="POST" th:action="@{/logout}">
-                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
-                </form>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-<div th:fragment="headerForUsers"  >
-    <nav id="colorlib-main-menu" role="navigation">
-        <ul>
-            <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
-            <li><a th:href="@{/books/chooseBook}" th:text="'Show all books'"> </a></li>
-            <li>
-                <form th:method="POST" th:action="@{/logout}">
-                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
-                </form>
-            </li>
-        </ul>
-    </nav>
-</div>
 
 
 <div th:fragment="selectorOfBooksPages" style="display: flex ;align-items: center;">
-    <a  th:if="${numberOfPage>0}" th:href="@{/books(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
+    <a  th:if="${numberOfPage>0}" th:href="@{/books(page=${numberOfPage-1}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
     <a  th:text="${numberOfPage + 1}"></a>
-    <a  th:if="${not allBooks.isEmpty()}"  th:href="@{/books(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
+    <a  th:if="${not allBooks.isEmpty()}"  th:href="@{/books(page=${numberOfPage+1}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'>'"></a>
     <a  th:if="${allBooks.isEmpty()}" class="pageSelectorBtn" th:text="'>'"></a>
 </div>
 <div th:fragment="selectorOfBooksPagesForUsers" style="display: flex ;align-items: center;justify-content: center">
     <ul>
-        <li><a  th:if="${numberOfPage>0}" th:href="@{/books/chooseBook(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'<'"></a></li>
+        <li><a  th:if="${numberOfPage>0}" th:href="@{/books(page=${numberOfPage-1}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'<'"></a></li>
         <li><a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a></li>
         <li><a  th:text="${numberOfPage + 1}"></a></li>
-        <li><a th:if="${not allBooks.isEmpty()}"  th:href="@{/books/chooseBook(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'>'"></a></li>
+        <li><a th:if="${not allBooks.isEmpty()}"  th:href="@{/books(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'>'"></a></li>
         <li><a  th:if="${allBooks.isEmpty()}" class="pageSelectorBtn" th:text="'>'"></a></li>
 
     </ul>

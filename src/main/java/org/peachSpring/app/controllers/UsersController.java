@@ -41,7 +41,7 @@ public class UsersController {
     public String index(HttpServletRequest httpServletRequest,
                         Model model,
                         @ModelAttribute("searchConfig") UserSearchConfig searchConfig){
-        int itemsPerPage = 9;
+
         int numberOfPage = 0;
         try {
             numberOfPage = Integer.parseInt(httpServletRequest.getParameter("page"));
@@ -49,7 +49,7 @@ public class UsersController {
                 numberOfPage = 0;
             }
         } catch (NumberFormatException ignore) {}
-        searchConfig.setItemsPerPage(itemsPerPage);
+
         searchConfig.setNumberOfPage(numberOfPage);
         model.addAttribute("filters", UserFilter.values());
         model.addAttribute("users", userService.findAll(searchConfig));
