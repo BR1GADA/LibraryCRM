@@ -32,6 +32,7 @@ public class BooksController {
     private final BookService bookService;
     private final BooksUsersService booksUsersService;
 
+
     private final BookValidator bookValidator;
     private final GenresService genresService;
 
@@ -58,9 +59,10 @@ public class BooksController {
             }
         } catch (NumberFormatException ignore) {}
         searchConfig.setNumberOfPage(numberOfPage);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        User curUser = usersDetails.getOrigin();
+        User curUser = usersDetails.getOrigin();*/
+        User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("genre", searchConfig.getGenre());
         model.addAttribute("usersName", curUser.getName());
         model.addAttribute("allBooks", bookService.getBooks(searchConfig));
@@ -101,9 +103,9 @@ public class BooksController {
             e.printStackTrace();
             return "errors/bookNotFound";
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        User curUser = usersDetails.getOrigin();
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();*/
+        User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("curBook",curBook);
         model.addAttribute("usersName", curUser.getName());
         model.addAttribute("usersRole", curUser.getRole());
@@ -122,16 +124,22 @@ public class BooksController {
             e.printStackTrace();
             return "errors/bookNotFound";
         }
+        User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("genres", genresService.findAll());
+        model.addAttribute("usersName", curUser.getName());
         return "books/edit";
     }
 
     @PatchMapping("/{id}")
-    public String editingBook(@ModelAttribute("curBook") @Valid Book book,
+    public String editingBook(Model model,
+                              @ModelAttribute("curBook") @Valid Book book,
                               BindingResult bindingResult,
                               @PathVariable("id") long id){
         bookValidator.validate(book,bindingResult);
         if (bindingResult.hasErrors()){
+            User curUser = UserService.getCurrentUsersPrinciples();
+            model.addAttribute("genres", genresService.findAll());
+            model.addAttribute("usersName", curUser.getName());
             return "books/edit";
         }
         bookService.update(book,id);
@@ -139,7 +147,10 @@ public class BooksController {
         return "redirect:/books/{id}";
     }
     @DeleteMapping("/{id}")
-    public String deleteBook(@ModelAttribute("curBook")Book book){
+    public String deleteBook(@ModelAttribute("curBook")Book book,
+                             @PathVariable("id") long id){
+
+
         try {
             bookService.delete(book);
         } catch (CannotDeleteBookException e) {
@@ -148,38 +159,9 @@ public class BooksController {
         }
         return "redirect:/books";
     }
-    @GetMapping("/appoint/{id}")
-    public String showAppointPage(Model model,
-                                  @ModelAttribute("chosenUser") User user,
-                                  @PathVariable("id") long id
-                                  ){
-        try {
-            model.addAttribute("curBook", bookService.findOne(id));
-        } catch (BookNotFoundException e) {
-            e.printStackTrace();
-            return "errors/bookNotFound";
-        }
-        model.addAttribute("users", userService.findAll());
-        return "books/choose";
-    }
 
 
-    @PostMapping("/appoint/{id}")
-    public String appointBookToUser(Model model,
-                                    @ModelAttribute("chosenUser") User user,
-                                    @PathVariable("id") long id){
 
-        //booksDAO.appointBook(user,id);
-        booksUsersService.appointBook(user,id);
-        return "redirect:/books";
-    }
-    @PostMapping("/release/{id}")
-    public String releaseBook(Model model,
-                              @PathVariable("id") long id){
-        //booksDAO.releaseBook(id);
-        booksUsersService.releaseBook(id);
-        return "redirect:/books/{id}";
-    }
 
 
 

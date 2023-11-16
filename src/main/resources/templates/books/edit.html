@@ -1,37 +1,143 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-<head>
-    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<header th:insert = "fragments/components :: header"></header>
-<body>
+<head th:insert="fragments/components :: links"></head>
+<body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
+<div id="colorlib-page">
+    <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
 
-  <form th:method="PATCH" th:action="@{/books/{id}(id=${curBook.getId()})}" th:object="${curBook}">
-      <div class="formToFill">
-          <label class="label" for="nameInput" >Name Input</label>
-          <input type="text" th:field="*{name}" id="nameInput">
-          <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="label"></div>
-      </div>
-      <div class="formToFill">
-          <label class="label" for="yearInput" >Year Input</label>
-          <input type="text" th:field="*{year}" id="yearInput">
-          <div style="color: red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="label"></div>
-      </div>
-      <div class="formToFill">
-          <label for="authorInput" >Author Input</label>
-          <input type="text" th:field="*{author}" id="authorInput">
-          <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="label"></div>
-      </div>
-      <div class="formToFill">
-          <label for="genre" class="label">GENRE</label>
-          <select th:field="*{genre}" id="genre">
-              <option th:each="g : ${genres}" th:value="${g.getId()}" th:text="${g.toString()}">
-              </option>
-          </select>
-      </div>
-      <input type="submit" class="btn" value="Update Book">
-  </form>
+        <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+                <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
+                <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+                <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+                <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+            </ul>
+        </nav>
+        <div class="colorlib-footer">
+            <div id="colorlib-logo" class="mb-4">
+                <a href="/" style="background-image: url(/images/bg_1.jpg);">Welcome,
+                    <span th:text="${usersName}"></span>
+                </a>
+            </div>
+            <form th:method="POST" th:action="@{/logout}">
+                <input style="cursor: pointer" type="submit" th:value="'Logout'">
+            </form>
+        </div>
+
+    </aside>
+    <div id="colorlib-main">
+        <section class="ftco-section img contact-section px-md-4">
+            <div class="container">
+                <div class="row block-9">
+                    <div class="col-lg-6 d-flex">
+                        <form th:method="PATCH" th:action="@{/books/{id}(id = ${curBook.getId()})}" class="bg-light p-5 contact-form" th:object="${curBook}">
+                            <div class="form-group">
+                                <input th:field="*{name}" type="text" class="form-control" placeholder="Book`s Name">
+                                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input th:field="*{year}" type="text" class="form-control" placeholder="Year of publishing">
+                                <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input th:field="*{author}" type="text" class="form-control" placeholder="Book`s author">
+                                <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+                            </div>
+                            <div class="form-group">
+                                <select th:field="*{genre}" >
+                                    <option th:each="genre : ${genres}" th:value="${genre.getId()}" th:text="${genre.getGenreName()}">
+
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea th:field="*{image}" name="" id="" cols="30" rows="7" class="form-control" placeholder="Link to Image"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Edit" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="col-lg-6 d-flex">
+                        <div class="bg-light p-5 contact-form">
+                            <div class="text  ftco-animate fadeInUp ftco-animated">
+                                <h2 class="mb-4" style="font-size: 40px;
+                                font-family: Poppins, Arial, sans-serif;
+                                font-weight: 600;
+                                line-height: 1.2;
+                                color: #000000;">
+                                    <span style="font-weight: 600; color: #1eafed;" th:text="${curBook.getName()}"></span>
+                                    <p th:text="${curBook.getAuthor()}"></p>
+                                </h2>
+                                <div class="row d-flex " style="flex-wrap: nowrap;">
+                                    <div class="col-md-6">
+                                        <p>Year</p>
+                                        <p>Genre</p>
+                                        <div th:if = "${usersRole} == ROLE_ADMIN">
+                                            <form th:method="GET" th:action="@{/books/{id}/edit(id = ${curBook.getId()})}">
+                                                <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Edit'">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p th:text="${curBook.getYear()}"></p>
+                                        <p th:text="${curBook.getGenre().getGenreName()}"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="row d-flex mb-5 mt-5 contact-info ftco-animate fadeInUp ftco-animated">
+                    <div class="col-md-12 mb-4">
+                        <h2 style="font-size: 40px;
+                                font-family: Poppins, Arial, sans-serif;
+                                font-weight: 600;
+                                line-height: 1.2;
+                                color: #000000;"
+                            class="h3">Reviews</h2>
+                    </div>
+                    <div class="col-md-12 d-flex mb-4">
+                        <div class="info bg-light p-4">
+                            <p>
+                                <span>Address:</span>
+                                198 West 21th Street, Suite 721 New York NY 10016
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+<div id="ftco-loader" class="fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle>
+    </svg>
+</div>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.stellar.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/aos.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/scrollax.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+
+
 </body>
 </html>

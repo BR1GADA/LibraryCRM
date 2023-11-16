@@ -17,6 +17,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name")
+    @Size(min = 2, max = 50, message = "Invalid size of name")
     @NotEmpty(message = "name shouldn`t be empty")
     @Pattern(regexp = "[0-9a-zA-Zа-яА-Я \"`:.\\-]+" , message = "Name should contains only letters")
     private String name;

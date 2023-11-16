@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.peachSpring.app.exceptions.CannotDeleteUserException;
 import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
+import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.services.BookService;
 import org.peachSpring.app.services.BooksUsersService;
 import org.peachSpring.app.services.UserService;
@@ -12,6 +13,8 @@ import org.peachSpring.app.util.constants.Gender;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
 import org.peachSpring.app.util.search_config.constants.UserFilter;
 import org.peachSpring.app.util.validators.UserOfflineValidator;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -130,6 +133,7 @@ public class UsersController {
         }
         return "redirect:/users";
     }
+
 
 
 

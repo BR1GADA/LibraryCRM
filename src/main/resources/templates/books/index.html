@@ -43,7 +43,7 @@
             <div class="row pt-md-4">
               <div th:each="book : ${allBooks}" class="col-md-12">
                 <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
-                  <a th:href="@{/books/{id}(id=${book.getId()})}" class="img img-2" th:style="'background-image:url('+${book.getImage()} + ');'" ></a>
+                  <a th:href="@{/books/{id}(id=${book.getId()})}" class="img img-2" th:style="'background-image:url('+${book.getImage()} + '), url(/images/error-404.png);'" ></a>
                   <div class="text text-2 pl-md-4">
                     <h3 class="mb-2"><a th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName()}"></a></h3>
                     <div class="meta-wrap">

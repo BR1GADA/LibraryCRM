@@ -4,11 +4,14 @@ import org.peachSpring.app.exceptions.CannotDeleteUserException;
 import org.peachSpring.app.exceptions.UserNotFoundException;
 import org.peachSpring.app.models.User;
 import org.peachSpring.app.repositories.UsersRepository;
+import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.util.advanced_search.UserFilterSearcherChain;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
 import org.peachSpring.app.util.search_config.constants.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,6 +87,11 @@ public class UserService {
 
     public Optional<User> findOneByLogin(String login) {
         return usersRepository.findByLogin(login);
+    }
+    public static User getCurrentUsersPrinciples(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
+        return usersDetails.getOrigin();
     }
 
 }
