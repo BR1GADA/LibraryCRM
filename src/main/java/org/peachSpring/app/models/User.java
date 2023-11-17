@@ -31,7 +31,7 @@ public class User {
     private List<Book> books;
 
     @Column(name = "ishaspass")
-    private boolean isHasPass;
+    private boolean isHasPass = true;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
@@ -74,6 +74,18 @@ public class User {
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public User(long id, String name, String email, boolean isHasPass, Gender gender, String login, String password, String role, String image) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.isHasPass = isHasPass;
+        this.gender = gender;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.image = image;
     }
 
     public User() {
@@ -171,4 +183,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(getName(), getGender());
     }
+
 }

@@ -25,7 +25,8 @@
     </div>
     <div class="colorlib-footer">
       <div id="colorlib-logo" class="mb-4">
-        <a href="/" style="background-image: url(/images/bg_1.jpg);">Welcome,
+
+        <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
           <span th:text="${usersName}"></span>
         </a>
       </div>

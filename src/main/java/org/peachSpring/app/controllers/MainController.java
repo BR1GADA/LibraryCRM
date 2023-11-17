@@ -19,6 +19,7 @@ public class MainController {
         User curUser = usersDetails.getOrigin();
         model.addAttribute("usersRole", curUser.getRole());
         model.addAttribute("usersName", curUser.getName());
+        model.addAttribute("usersId", curUser.getId());
         return "main/main";
     }
 

@@ -4,17 +4,28 @@
 <body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
 <div id="colorlib-page">
     <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
-        <nav id="colorlib-main-menu" role="navigation">
-            <ul>
-                <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-                <li ><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
-                <li class="colorlib-active"><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
-                <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
-            </ul>
-        </nav>
+        <div th:if="${usersRole} == ROLE_USER">
+            <nav id="colorlib-main-menu" role="navigation">
+                <ul>
+                    <li class="colorlib-active"><a th:href="@{/}" th:text="'Main page'"></a></li>
+                    <li><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
+                </ul>
+            </nav>
+        </div>
+        <div th:if="${usersRole} == ROLE_ADMIN">
+            <nav id="colorlib-main-menu" role="navigation">
+                <ul>
+                    <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
+                    <li><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+                    <li class="colorlib-active"><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+                    <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+                </ul>
+            </nav>
+        </div>
         <div class="colorlib-footer">
             <div id="colorlib-logo" class="mb-4">
-                <a href="/" style="background-image: url(/images/bg_1.jpg);">Welcome,
+
+                <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
                     <span th:text="${usersName}"></span>
                 </a>
             </div>
@@ -55,14 +66,16 @@
                                                 <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Unban'">
                                             </form>
                                         </div>
+                                        <div>
+                                            <form th:method="GET" th:action="@{/users/{id}/edit(id = ${user.getId()})}">
+                                                <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Edit'"></form>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <p th:text="${user.getEmail()}"></p>
-                                        <div th:if = "${usersRole} == ROLE_ADMIN">
-                                            <form id="deleteForm" th:method="DELETE" th:action="@{/users/{id}(id = ${user.getId()})}">
-                                                <input  class="btn btn-primary py-3 px-5" type="submit" th:value="'Delete'">
-                                            </form>
-                                        </div>
+                                        <form id="deleteForm" th:method="DELETE" th:action="@{/users/{id}(id = ${user.getId()})}">
+                                            <input  class="btn btn-primary py-3 px-5" type="submit" th:value="'Delete'">
+                                        </form>
                                     </div>
 
                                 </div>

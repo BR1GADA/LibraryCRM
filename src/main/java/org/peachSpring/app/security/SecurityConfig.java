@@ -36,7 +36,11 @@ public class SecurityConfig  {
                                 new RegexRequestMatcher("/images/.*", "GET"),
                                 new RegexRequestMatcher("/js/.*", "GET"),
                                 new RegexRequestMatcher("/fonts/.*", "GET"),
-                                new RegexRequestMatcher("/favicon/.*","GET"))
+                                new RegexRequestMatcher("/favicon/.*","GET"),
+                                new RegexRequestMatcher("/users/personal/.*", "GET"),
+                                new RegexRequestMatcher("/users/.*/edit.*", "GET"),
+                                new RegexRequestMatcher("/users/.*", "PATCH"),
+                                new RegexRequestMatcher("/users/.*","DELETE"))
                         .authenticated()
                         .anyRequest()
                         .hasRole("ADMIN"))

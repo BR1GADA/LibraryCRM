@@ -67,6 +67,7 @@ public class BooksController {
         model.addAttribute("stringToFind", httpServletRequest.getParameter("stringToFind"));
         model.addAttribute("genres", genresService.findAll());
         model.addAttribute("usersRole", curUser.getRole());
+        model.addAttribute("usersId", curUser.getId());
         return "books/index";
     }
 
@@ -106,6 +107,7 @@ public class BooksController {
         model.addAttribute("curBook",curBook);
         model.addAttribute("usersName", curUser.getName());
         model.addAttribute("usersRole", curUser.getRole());
+        model.addAttribute("usersId", curUser.getId());
         return "books/book";
     }
 
@@ -124,6 +126,7 @@ public class BooksController {
         User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("genres", genresService.findAll());
         model.addAttribute("usersName", curUser.getName());
+        model.addAttribute("usersId", curUser.getId());
         return "books/edit";
     }
 
