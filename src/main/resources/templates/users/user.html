@@ -1,31 +1,139 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-<head>
-    <link th:href="@{/styles/styleForBooks.css}" rel="stylesheet" type="text/css" />
-    <meta charset="UTF-8">
-    <title th:text="${id}"></title>
-</head>
-<header th:insert = "fragments/components :: header"></header>
-<body>
-<div >
-    <p th:text="'| '+${user.getName()}+' |'" class="field"></p>
-    <div  >
-        <p class="field" th:text="'| Is has book: '+${user.isHasBook()}+' |'"></p>
-        <div style="display: flex;justify-content: flex-start;"  th:if="${user.isHasBook()}" class="field">
-            <p  th:text="'Name is'"></p>
-            <a style="margin-top: auto; margin-bottom: auto; margin-left: 10px"  th:href="@{/books/{id}(id=${book.getId()})}" th:text="${book.getName()}"></a>
+<head th:insert="fragments/components :: links"></head>
+<body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
+<div id="colorlib-page">
+    <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
+        <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+                <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
+                <li ><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+                <li class="colorlib-active"><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+                <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+            </ul>
+        </nav>
+        <div class="colorlib-footer">
+            <div id="colorlib-logo" class="mb-4">
+                <a href="/" style="background-image: url(/images/bg_1.jpg);">Welcome,
+                    <span th:text="${usersName}"></span>
+                </a>
+            </div>
+            <form th:method="POST" th:action="@{/logout}">
+                <input style="cursor: pointer" type="submit" th:value="'Logout'">
+            </form>
         </div>
 
+    </aside>
+    <div id="colorlib-main">
+        <section class="ftco-section img contact-section px-md-4">
+            <div class="container">
+                <div class="row block-9">
+                    <div class="col-lg-6 d-flex" >
+                        <div id="map" class="bg-light ftco-animate fadeInUp ftco-animated" style="display: flex; justify-content: center; overflow: hidden; align-content: center; align-items: center">
+                            <img class="img" style="height: inherit; max-width: 100%" th:src="${user.getImage()}" onerror="this.src='/images/error-404.png';" alt="Image wasn`t found"> <!--max-width: 100%;position: relative;max-height: 100%;-->
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex">
+                        <div class="bg-light p-5 contact-form">
+                            <div class="text  ftco-animate fadeInUp ftco-animated">
+                                <h2 class="mb-4" style="font-size: 40px;
+                                font-family: Poppins, Arial, sans-serif;
+                                font-weight: 600;
+                                line-height: 1.2;
+                                color: #000000;">
+                                    <span style="font-weight: 600; color: #1eafed;" th:text="${user.getName()}"></span>
+                                    <p th:text="${user.getLogin()}"></p>
+                                </h2>
+                                <div class="row d-flex " style="flex-wrap: nowrap;">
+                                    <div class="col-md-6">
+                                        <p>Email</p>
+                                        <div th:if = "${usersRole} == ROLE_ADMIN">
+                                            <form th:if="${user.isHasPass()}" id="banForm" th:method="PATCH" th:action="@{/users/ban/{id}(id = ${user.getId()})}">
+                                                <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Ban'">
+                                            </form>
+                                            <form th:if="${not user.isHasPass()}" id="banForm" th:method="PATCH" th:action="@{/users/unban/{id}(id = ${user.getId()})}">
+                                                <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Unban'">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p th:text="${user.getEmail()}"></p>
+                                        <div th:if = "${usersRole} == ROLE_ADMIN">
+                                            <form id="deleteForm" th:method="DELETE" th:action="@{/users/{id}(id = ${user.getId()})}">
+                                                <input  class="btn btn-primary py-3 px-5" type="submit" th:value="'Delete'">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="row d-flex mb-5 mt-5 contact-info ftco-animate fadeInUp ftco-animated">
+                    <div class="col-md-12 mb-4">
+                        <h2 style="font-size: 40px;
+                                font-family: Poppins, Arial, sans-serif;
+                                font-weight: 600;
+                                line-height: 1.2;
+                                color: #000000;"
+                            class="h3">Reviews</h2>
+                    </div>
+                    <div class="col-md-12 d-flex mb-4">
+                        <div class="info bg-light p-4">
+                            <p>
+                                <span>Address:</span>
+                                198 West 21th Street, Suite 721 New York NY 10016
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <p th:if="${user.getGender()!=null}" th:text="'| Gender: '+${user.getGender()} + ' |'"></p>
 </div>
-<div class="spanOfButtons">
-    <a th:href="@{/users/{id}/edit(id=${user.getId()})}" class="btn">Edit</a>
-    <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
-        <input type="submit" value="DELETE" class="btn" ></input>
-    </form>
+<div id="ftco-loader" class="fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle>
+    </svg>
 </div>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.stellar.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/aos.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/scrollax.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script>
+    document.getElementById('deleteForm').addEventListener('submit', function(event) {
+        var userConfirmation = confirm("Are you sure you want to proceed?");
+        if (!userConfirmation) {
+            event.preventDefault();
+        }
+    });
+</script>
+<script>
+    document.getElementById('banForm').addEventListener('submit', function(event) {
+        var userConfirmation = confirm("Are you sure you want to proceed?");
+        if (!userConfirmation) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+
 
 </body>
 </html>

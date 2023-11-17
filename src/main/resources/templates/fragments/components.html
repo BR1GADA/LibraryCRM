@@ -51,12 +51,15 @@
 </div>
 
 
-<div th:fragment="selectorOfUsersPages" style="display: flex ;align-items: center;">
-    <a  th:if="${numberOfPage>0}" th:href="@{/users(page=${numberOfPage-1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a>
-    <a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a>
-    <a  th:text="${numberOfPage + 1}"></a>
-    <a th:if="${not users.isEmpty()}"  th:href="@{/users(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a>
-    <a  th:if="${users.isEmpty()}" class="pageSelectorBtn" th:text="'>'"></a>
+<div th:fragment="selectorOfUsersPages" style="display: flex ;align-items: center;justify-content: center">
+    <ul>
+        <li><a  th:if="${numberOfPage>0}" th:href="@{/users(page=${numberOfPage-1}, stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'<'"></a></li>
+        <li><a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a></li>
+        <li><a  th:text="${numberOfPage + 1}"></a></li>
+        <li><a th:if="${not users.isEmpty()}"  th:href="@{/users(page=${numberOfPage+1},stringToFind=${stringToFind})}" class="pageSelectorBtn" th:text="'>'"></a></li>
+        <li><a  th:if="${users.isEmpty()}" class="pageSelectorBtn" th:text="'>'"></a></li>
+    </ul>
+
 </div>
 
 

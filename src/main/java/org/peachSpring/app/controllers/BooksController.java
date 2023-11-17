@@ -59,9 +59,6 @@ public class BooksController {
             }
         } catch (NumberFormatException ignore) {}
         searchConfig.setNumberOfPage(numberOfPage);
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UsersDetails usersDetails = (UsersDetails) authentication.getPrincipal();
-        User curUser = usersDetails.getOrigin();*/
         User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("genre", searchConfig.getGenre());
         model.addAttribute("usersName", curUser.getName());

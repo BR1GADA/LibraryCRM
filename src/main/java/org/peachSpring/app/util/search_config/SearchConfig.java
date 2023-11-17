@@ -3,7 +3,7 @@ package org.peachSpring.app.util.search_config;
 import org.peachSpring.app.util.search_config.constants.Filter;
 
 public abstract class SearchConfig {
-    protected static final int itemsPerPage = 6;
+    protected static final int itemsPerPage = 9;
     protected int numberOfPage;
     protected String stringToFind;
 

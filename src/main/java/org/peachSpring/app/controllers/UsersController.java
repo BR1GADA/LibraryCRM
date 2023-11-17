@@ -49,29 +49,25 @@ public class UsersController {
                 numberOfPage = 0;
             }
         } catch (NumberFormatException ignore) {}
-
+        User curUser = UserService.getCurrentUsersPrinciples();
         searchConfig.setNumberOfPage(numberOfPage);
         model.addAttribute("filters", UserFilter.values());
         model.addAttribute("users", userService.findAll(searchConfig));
         model.addAttribute("numberOfPage", numberOfPage);
         model.addAttribute("stringToFind", searchConfig.getStringToFind());
         model.addAttribute("filter",searchConfig.getFilter());
+        model.addAttribute("usersName", curUser.getName());
         return "users/index";
     }
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model){
         try {
             User curUser = userService.findOne(id);
+            User principles = UserService.getCurrentUsersPrinciples();
             model.addAttribute("id",id);
             model.addAttribute("user", curUser);
-            if (curUser.isHasPass()){
-                model.addAttribute("book", bookService
-                        .findOne(
-                                booksUsersService
-                                    .findFirstByUserIdOrderByTimeDesc(curUser.getId())
-                                    .getBook_id())
-                );
-            }
+            model.addAttribute("usersRole", principles.getRole());
+            model.addAttribute("usersName", principles.getName());
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             return "errors/userNotFound";
@@ -102,6 +98,9 @@ public class UsersController {
     }
     @GetMapping("/{id}/edit")
     public String requestToEditUser(Model model, @PathVariable("id") long id){
+        User principles = UserService.getCurrentUsersPrinciples();
+        model.addAttribute("usersRole", principles.getRole());
+        model.addAttribute("usersName", principles.getName());
         model.addAttribute("genders",Arrays.asList(Gender.MALE,Gender.FEMALE));
         model.addAttribute("curUser", userService.findOne(id));
         return "users/edit";
@@ -120,6 +119,19 @@ public class UsersController {
 
         return "redirect:/users";
     }
+    @PatchMapping("/ban/{id}")
+    public String banUser(Model model,
+                          @PathVariable("id") long id){
+        userService.changeLocking(id);
+        return "redirect:/users/{id}";
+    }
+    @PatchMapping("/unban/{id}")
+    public String unbanUser(Model model,
+                          @PathVariable("id") long id){
+        userService.changeLocking(id);
+        return "redirect:/users/{id}";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") long id){
         try {

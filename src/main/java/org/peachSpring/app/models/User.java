@@ -1,12 +1,14 @@
 package org.peachSpring.app.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.peachSpring.app.util.constants.Gender;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -20,10 +22,9 @@ public class User {
     @Column(name = "name")
     @Pattern(regexp = "[a-zA-Zа-яА-Я `.\\-]+", message = "Name should contains only letters")
     private String name;
-    @NotEmpty(message = "Address shouldn't be empty")
-    @Pattern(regexp = "[A-ZА-Я]\\w+, [A-ZА-Я]\\w+, \\d{6}", message = "Your address should be like this: \"Country, City, 000000\"")
-    @Column(name = "address")
-    private String address;
+    @Email
+    @Column(name = "email")
+    private String email;
 
 
     @ManyToMany(mappedBy = "users")
@@ -46,24 +47,33 @@ public class User {
 
     @Column(name = "role")
     private String role;
+    @Column(name = "image")
+    private String image;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public User(long id, String name, String email) {
         this.id = id;
         this.name = name;
-        this.address = email;
+        this.email = email;
     }
 
-    public User(long id, String name, String address, Gender gender) {
+    public User(long id, String name, String email, Gender gender) {
         this.id = id;
         this.name = name;
-        this.address = address;
+        this.email = email;
         this.gender = gender;
     }
 
-    public User(String name, String address) {
+    public User(String name, String email) {
         this.name = name;
-        this.address = address;
+        this.email = email;
     }
 
     public User() {
@@ -85,12 +95,12 @@ public class User {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isHasPass() {
@@ -147,5 +157,18 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getName().equals(user.getName()) && Objects.equals(getEmail(), user.getEmail()) && getGender() == user.getGender() && getLogin().equals(user.getLogin()) && getRole().equals(user.getRole());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getGender());
     }
 }

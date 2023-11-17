@@ -10,8 +10,8 @@
 <form th:method="POST" th:action="@{/users}" th:object="${newUser}">
     <div class="formToFill">
         <label for="address_input" class="label">ADDRESS</label>
-        <input type="text" th:field = "*{address}" id="address_input">
-        <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="label"></div>
+        <input type="text" th:field = "*{email}" id="address_input">
+        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="label"></div>
     </div>
     <div class="formToFill">
         <label for="name" class="label">NAME</label>

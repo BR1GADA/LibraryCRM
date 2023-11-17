@@ -65,17 +65,16 @@ public class UserService {
         usersRepository.save(updatedUser);
 
     }
+    @Transactional
+    public void changeLocking(long id){
+        User userToChange = usersRepository.findById(id).get();
+        userToChange.setHasPass(!userToChange.isHasPass());
+        usersRepository.save(userToChange);
+    }
 
     @Transactional
     public void deleteById(long id) throws CannotDeleteUserException {
-        User curUser = usersRepository.getOne(id);
-        if (!curUser.isHasPass()) {
-            usersRepository.deleteById(id);
-        } else {
-            throw new CannotDeleteUserException(
-                    String.format("User with id %d cannot be deleted `cause one has a book", id));
-        }
-
+        usersRepository.deleteById(id);
     }
 
     public Optional<User> findOneByNameIgnoreCase(String name) {

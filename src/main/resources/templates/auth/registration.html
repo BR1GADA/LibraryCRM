@@ -30,10 +30,10 @@
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
-                                            <input th:field="*{address}" type="text" id="Address" class="form-control form-control-lg" required/>
+                                            <input th:field="*{email}" type="text" id="Address" class="form-control form-control-lg" required/>
                                             <label class="form-label" for="Address">Address</label>
                                         </div>
-                                        <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="label"></div>
+                                        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="label"></div>
 
                                     </div>
                                 </div>
