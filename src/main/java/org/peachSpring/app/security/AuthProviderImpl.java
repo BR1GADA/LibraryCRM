@@ -2,26 +2,23 @@ package org.peachSpring.app.security;
 
 import org.peachSpring.app.services.UsersDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
 
     private final UsersDetailsService usersDetailsService;
     private final PasswordEncoderImpl passwordEncoder;
+    private final AccountStatusUserDetailsChecker accountStatusUserDetailsChecker;
     @Autowired
     public AuthProviderImpl(UsersDetailsService usersDetailsService, PasswordEncoderImpl passwordEncoder) {
         this.usersDetailsService = usersDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.accountStatusUserDetailsChecker = new AccountStatusUserDetailsChecker();
     }
 
     @Override
@@ -29,8 +26,11 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String login = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails curUser = usersDetailsService.loadUserByUsername(login);
-        System.out.println(passwordEncoder.encode("rar"));
-        System.out.println(passwordEncoder.encode("qqq"));
+        try {
+            accountStatusUserDetailsChecker.check(curUser);
+        } catch (LockedException e) {
+            throw new LockedException("User account is locked");
+        }
         if (!passwordEncoder.matches(password,curUser.getPassword())){
             throw new BadCredentialsException("Password is incorrect");
         }

@@ -1,14 +1,8 @@
 package org.peachSpring.app.security;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.stereotype.Component;
@@ -17,11 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityConfig  {
     private final AuthProviderImpl authProvider;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
-    public SecurityConfig(AuthProviderImpl authProvider) {
+    public SecurityConfig(AuthProviderImpl authProvider, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.authProvider = authProvider;
-
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -49,7 +44,8 @@ public class SecurityConfig  {
                 .formLogin(form->form.loginPage("/auth/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/")
-                        .failureUrl("/auth/login?error")
+                        //.failureUrl("/auth/login?error")
+                        .failureHandler(customAuthenticationFailureHandler)
                  )
                 .logout(logout->logout
                         .logoutUrl("/logout")

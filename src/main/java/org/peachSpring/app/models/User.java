@@ -29,8 +29,8 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Book> books;
 
-    @Column(name = "hasbook")
-    private boolean hasBook;
+    @Column(name = "ishaspass")
+    private boolean isHasPass;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
@@ -93,12 +93,12 @@ public class User {
         this.address = address;
     }
 
-    public boolean isHasBook() {
-        return hasBook;
+    public boolean isHasPass() {
+        return isHasPass;
     }
 
-    public void setHasBook(boolean hasBook) {
-        this.hasBook = hasBook;
+    public void setHasPass(boolean hasPass) {
+        this.isHasPass = hasPass;
     }
 
     public List<Book> getBooks() {

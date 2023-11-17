@@ -7,9 +7,7 @@ import org.peachSpring.app.repositories.UsersRepository;
 import org.peachSpring.app.security.UsersDetails;
 import org.peachSpring.app.util.advanced_search.UserFilterSearcherChain;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
-import org.peachSpring.app.util.search_config.constants.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,7 +69,7 @@ public class UserService {
     @Transactional
     public void deleteById(long id) throws CannotDeleteUserException {
         User curUser = usersRepository.getOne(id);
-        if (!curUser.isHasBook()) {
+        if (!curUser.isHasPass()) {
             usersRepository.deleteById(id);
         } else {
             throw new CannotDeleteUserException(

@@ -1,7 +1,6 @@
 package org.peachSpring.app.util.advanced_search;
 
 import org.peachSpring.app.models.User;
-import org.peachSpring.app.util.search_config.SearchConfig;
 import org.peachSpring.app.util.search_config.UserSearchConfig;
 import org.peachSpring.app.util.search_config.constants.UserFilter;
 
@@ -26,7 +25,7 @@ public class UserFilterSearcherChain extends SearcherChain<User>{
         }
         switch ((UserFilter)this.searchConfig.getFilter()){
             case IS_HAS_BOOK -> {
-                return list.stream().filter(User::isHasBook).collect(Collectors.toList());
+                return list.stream().filter(User::isHasPass).collect(Collectors.toList());
             }
             default -> {
                 return list;

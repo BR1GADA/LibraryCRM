@@ -39,7 +39,7 @@ public class UsersDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.isHasPass();
     }
 
     @Override

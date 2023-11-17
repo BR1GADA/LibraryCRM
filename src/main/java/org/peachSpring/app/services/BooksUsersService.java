@@ -37,7 +37,7 @@ public class BooksUsersService {
         booksUsersRepository.save(new Book_User(user.getId(), bookId, curDate));
         User curUser = usersRepository.getOne(user.getId());
         Book curBook = booksRepository.getOne(bookId);
-        curUser.setHasBook(true);
+        curUser.setHasPass(true);
         curBook.setIstaken(true);
     }
 
@@ -46,7 +46,7 @@ public class BooksUsersService {
         Book curBook = booksRepository.getOne(id);
         Book_User currentRelation = findFirstByBookIdOrderByTimeDesc(id);
         User owner = usersRepository.getOne(currentRelation.getUserId());
-        owner.setHasBook(false);
+        owner.setHasPass(false);
         curBook.setIstaken(false);
     }
 
