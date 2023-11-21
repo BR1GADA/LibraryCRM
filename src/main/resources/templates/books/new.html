@@ -7,13 +7,13 @@
 
         <aside id="colorlib-aside2" role="complementary" class="sidenav closebtn" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</aside>
         <aside id="colorlib-aside" role="complementary" class="sidenav js-fullheight help-h" style="height: 939px;">
-            <a style="position: relative;bottom: 70px;left: 250px; font-size: 30px" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a style="position: relative;bottom: 70px;left: 250px; font-size: 30px" href="javascript:void(0)" class="closebtn hide-h" onclick="closeNav()">&times;</a>
             <div th:if="${usersRole} == ROLE_USER">
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-                        <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
-                        <li ><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+                        <li ><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
+                        <li class="colorlib-active" ><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
                     </ul>
                 </nav>
             </div>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-lg-6 d-flex" >
                         <div id="map" class="bg-light ftco-animate fadeInUp ftco-animated" style="display: flex; justify-content: center; overflow: hidden; align-content: center; align-items: center">
-                            <img class="img" style="height: inherit; max-width: 100%" src="/images/cat.png" onerror="this.src='/images/error-404.png';" alt="Image wasn`t found"> <!--max-width: 100%;position: relative;max-height: 100%;-->
+                            <img class="img" style="height: inherit; max-width: 100%" src="/images/cat.jpg" onerror="this.src='/images/error-404.png';" alt="Image wasn`t found"> <!--max-width: 100%;position: relative;max-height: 100%;-->
                         </div>
                     </div>
 

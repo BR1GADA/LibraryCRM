@@ -48,13 +48,13 @@ public class User {
     @Column(name = "role")
     private String role;
     @Column(name = "image")
-    private String image;
+    private short image;
 
-    public String getImage() {
+    public short getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(short image) {
         this.image = image;
     }
 
@@ -76,7 +76,7 @@ public class User {
         this.email = email;
     }
 
-    public User(long id, String name, String email, boolean isHasPass, Gender gender, String login, String password, String role, String image) {
+    public User(long id, String name, String email, boolean isHasPass, Gender gender, String login, String password, String role, short image) {
         this.id = id;
         this.name = name;
         this.email = email;

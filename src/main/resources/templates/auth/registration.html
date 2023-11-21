@@ -31,7 +31,7 @@
 
                                         <div class="form-outline">
                                             <input th:field="*{email}" type="text" id="Address" class="form-control form-control-lg" required/>
-                                            <label class="form-label" for="Address">Address</label>
+                                            <label class="form-label" for="Address">Email address</label>
                                         </div>
                                         <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="label"></div>
 

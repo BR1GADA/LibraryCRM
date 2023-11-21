@@ -149,6 +149,7 @@ public class UsersController {
         User curUser = userService.findOne(id);
         user.setPassword(curUser.getPassword());
         user.setRole(curUser.getRole());
+        user.setImage(curUser.getImage());
         User principles = UserService.getCurrentUsersPrinciples();
         userOnlineValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
