@@ -3,7 +3,6 @@ package org.peachSpring.app.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.annotations.Fetch;
 
 
 import java.util.List;
@@ -17,9 +16,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name")
-    @Size(min = 2, max = 50, message = "Invalid size of name")
-    @NotEmpty(message = "name shouldn`t be empty")
-    @Pattern(regexp = "[0-9a-zA-Zа-яА-Я \"`:.\\-]+" , message = "Name should contains only letters")
+    @Size(min = 2, max = 100, message = "Invalid size of name")
     private String name;
     @Column(name = "year")
     @Positive(message = "year should be greater than 0")
@@ -27,13 +24,12 @@ public class Book {
     private int year;
     @Column(name = "author")
     @Size(min = 2, max = 50, message = "Invalid size of name")
-    @NotEmpty (message = "author shouldn`t be empty")
     @Pattern(regexp = "[a-zA-Zа-яА-Я `.\\-]+" , message = " Authors name should contains only letters")
     private String author;
 
 
-    @Column(name = "istaken")
-    private boolean istaken;
+    @Column(name = "isapproved")
+    private boolean isApproved;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre", referencedColumnName = "id")
@@ -107,12 +103,12 @@ public class Book {
         this.users = users;
     }
 
-    public boolean isIstaken() {
-        return istaken;
+    public boolean isApproved() {
+        return isApproved;
     }
 
-    public void setIstaken(boolean istaken) {
-        this.istaken = istaken;
+    public void setApproved(boolean approved) {
+        this.isApproved = approved;
     }
 
     public Genre getGenre() {

@@ -32,6 +32,7 @@ public class SecurityConfig  {
                                 new RegexRequestMatcher("/", "GET"),
                                 new RegexRequestMatcher("/styles/.*", "GET"),
                                 new RegexRequestMatcher("/books.*", "GET"),
+                                new RegexRequestMatcher("/books.*", "POST"),
                                 new RegexRequestMatcher("/\\?continue", "GET"),
                                 new RegexRequestMatcher("/images/.*", "GET"),
                                 new RegexRequestMatcher("/js/.*", "GET"),

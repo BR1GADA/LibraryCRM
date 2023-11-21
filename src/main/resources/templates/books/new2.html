@@ -3,53 +3,61 @@
 <head th:insert="fragments/components :: links"></head>
 <body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
 <div id="colorlib-page">
-    <div>
+    <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
 
-        <aside id="colorlib-aside2" role="complementary" class="sidenav closebtn" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</aside>
-        <aside id="colorlib-aside" role="complementary" class="sidenav js-fullheight help-h" style="height: 939px;">
-            <a style="position: relative;bottom: 70px;left: 250px; font-size: 30px" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <div th:if="${usersRole} == ROLE_USER">
-                <nav id="colorlib-main-menu" role="navigation">
-                    <ul>
-                        <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-                        <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
-                        <li ><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
-                    </ul>
-                </nav>
+        <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+                <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
+                <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+                <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+            </ul>
+        </nav>
+        <div class="colorlib-footer">
+            <div id="colorlib-logo" class="mb-4">
+
+                <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
+                    <span th:text="${usersName}"></span>
+                </a>
             </div>
-            <div th:if="${usersRole} == ROLE_ADMIN">
-                <nav id="colorlib-main-menu" role="navigation">
-                    <ul>
-                        <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-                        <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
-                        <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
-                        <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="colorlib-footer">
-                <div id="colorlib-logo" class="mb-4">
+            <form th:method="POST" th:action="@{/logout}">
+                <input style="cursor: pointer" type="submit" th:value="'Logout'">
+            </form>
+        </div>
 
-                    <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
-                        <span th:text="${usersName}"></span>
-                    </a>
-                </div>
-                <form th:method="POST" th:action="@{/logout}">
-                    <input style="cursor: pointer" type="submit" th:value="'Logout'">
-                </form>
-            </div>
-
-        </aside>
-
-    </div>
+    </aside>
     <div id="colorlib-main">
         <section class="ftco-section img contact-section px-md-4">
             <div class="container">
                 <div class="row block-9">
-                    <div class="col-lg-6 d-flex" >
-                        <div id="map" class="bg-light ftco-animate fadeInUp ftco-animated" style="display: flex; justify-content: center; overflow: hidden; align-content: center; align-items: center">
-                            <img class="img" style="height: inherit; max-width: 100%" th:src="${curBook.getImage()}" onerror="this.src='/images/error-404.png';" alt="Image wasn`t found"> <!--max-width: 100%;position: relative;max-height: 100%;-->
-                        </div>
+                    <div class="col-lg-6 d-flex">
+                        <form th:method="POST" th:action="@{/books}" class="bg-light p-5 contact-form" th:object="${bookToAdd}">
+                            <div class="form-group">
+                                <input th:field="*{name}" type="text" class="form-control" placeholder="Book`s Name">
+                                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input th:field="*{year}" type="text" class="form-control" placeholder="Year of publishing">
+                                <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input th:field="*{author}" type="text" class="form-control" placeholder="Book`s author">
+                                <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+                            </div>
+                            <div class="form-group">
+                                <select th:field="*{genre}" >
+                                    <option th:each="genre : ${genres}" th:value="${genre.getId()}" th:text="${genre.getGenreName()}">
+
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea th:field="*{image}" name="" id="" cols="30" rows="7" class="form-control" placeholder="Link to Image"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Request to add" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </form>
+
                     </div>
                     <div class="col-lg-6 d-flex">
                         <div class="bg-light p-5 contact-form">
@@ -66,26 +74,15 @@
                                     <div class="col-md-6">
                                         <p>Year</p>
                                         <p>Genre</p>
-                                        <div th:if = "${usersRole == 'ROLE_ADMIN'}">
+                                        <div th:if = "${usersRole} == ROLE_ADMIN">
                                             <form th:method="GET" th:action="@{/books/{id}/edit(id = ${curBook.getId()})}">
                                                 <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Edit'">
-                                            </form>
-                                        </div>
-                                        <div th:if="${not curBook.isApproved()}" class="mt-3">
-                                            <form th:method="GET" th:action="@{/books/{id}/approve(id = ${curBook.getId()})}">
-                                                <input class="btn btn-primary py-3 px-5" type="submit" th:value="'Approve'">
                                             </form>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <p th:text="${curBook.getYear()}"></p>
                                         <p th:text="${curBook.getGenre().getGenreName()}"></p>
-                                        <div th:if = "${usersRole == 'ROLE_ADMIN'}">
-                                            <form id="deleteForm" th:method="DELETE" th:action="@{/books/{id}(id = ${curBook.getId()})}">
-
-                                                <input  class="btn btn-primary py-3 px-5" type="submit" th:value="'Delete'">
-                                            </form>
-                                        </div>
                                     </div>
 
                                 </div>
@@ -139,26 +136,6 @@
 <script type="text/javascript" th:src="@{/js/jquery.animateNumber.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/scrollax.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
-
-<script>function openNav() {
-    document.getElementById("colorlib-aside").classList.remove('help-h');
-    document.getElementById("colorlib-aside").style.paddingLeft = "2em";
-    document.getElementById("colorlib-aside").style.paddingRight = "2em";
-}</script>
-<script>
-
-    function closeNav() {
-        document.getElementById("colorlib-aside").classList.add('help-h');
-    }
-</script>
-<script>
-    document.getElementById('deleteForm').addEventListener('submit', function(event) {
-        var userConfirmation = confirm("Are you sure you want to proceed?");
-        if (!userConfirmation) {
-            event.preventDefault();
-        }
-    });
-</script>
 
 
 

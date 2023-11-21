@@ -13,6 +13,7 @@ import org.peachSpring.app.services.GenresService;
 import org.peachSpring.app.services.UserService;
 
 import org.peachSpring.app.util.search_config.BookSearchConfig;
+import org.peachSpring.app.util.search_config.constants.BookFilter;
 import org.peachSpring.app.util.validators.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -59,6 +60,7 @@ public class BooksController {
             }
         } catch (NumberFormatException ignore) {}
         searchConfig.setNumberOfPage(numberOfPage);
+        searchConfig.setFilter(BookFilter.IS_APPROVED);
         User curUser = UserService.getCurrentUsersPrinciples();
         model.addAttribute("genre", searchConfig.getGenre());
         model.addAttribute("usersName", curUser.getName());
@@ -75,6 +77,10 @@ public class BooksController {
     @GetMapping("/new")
     public String requestToAddNewBook(Model model,
                                       @ModelAttribute("bookToAdd") Book book){
+        User curUser = UserService.getCurrentUsersPrinciples();
+        model.addAttribute("usersName", curUser.getName());
+        model.addAttribute("usersRole", curUser.getRole());
+        model.addAttribute("usersId", curUser.getId());
         model.addAttribute("genres", genresService.findAll());
         return "books/new";
     }
@@ -83,10 +89,13 @@ public class BooksController {
     public String addNewBook(Model model,
                              @ModelAttribute("bookToAdd") @Valid Book book,
                              BindingResult bindingResult){
-        System.out.println(book.getYear());
         bookValidator.validate(book,bindingResult);
         if (bindingResult.hasErrors()){
             model.addAttribute("genres", genresService.findAll());
+            User curUser = UserService.getCurrentUsersPrinciples();
+            model.addAttribute("usersName", curUser.getName());
+            model.addAttribute("usersRole", curUser.getRole());
+            model.addAttribute("usersId", curUser.getId());
             return "books/new";
         }
         bookService.save(book);
@@ -119,6 +128,7 @@ public class BooksController {
                                     Model model){
         try {
             model.addAttribute("curBook", bookService.findOne(id));
+            model.addAttribute("correctBook", bookService.findOne(id));
         } catch (BookNotFoundException e) {
             e.printStackTrace();
             return "errors/bookNotFound";
@@ -128,6 +138,13 @@ public class BooksController {
         model.addAttribute("usersName", curUser.getName());
         model.addAttribute("usersId", curUser.getId());
         return "books/edit";
+    }
+    @GetMapping("/{id}/approve")
+    public String approveBook(@PathVariable("id") long id,
+                              Model model){
+        bookService.approveBook(id);
+        return "redirect:/books/{id}";
+
     }
 
     @PatchMapping("/{id}")
@@ -140,8 +157,11 @@ public class BooksController {
             User curUser = UserService.getCurrentUsersPrinciples();
             model.addAttribute("genres", genresService.findAll());
             model.addAttribute("usersName", curUser.getName());
+            model.addAttribute("usersId", curUser.getId());
+            model.addAttribute("correctBook", bookService.findOne(id));
             return "books/edit";
         }
+        book.setApproved(true);
         bookService.update(book,id);
 
         return "redirect:/books/{id}";

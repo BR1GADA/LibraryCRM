@@ -49,6 +49,17 @@
     </ul>
 
 </div>
+<div th:fragment="selectorOfMainPages" style="display: flex ;align-items: center;justify-content: center">
+    <ul>
+        <li><a  th:if="${numberOfPage>0}" th:href="@{/(page=${numberOfPage-1}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'<'"></a></li>
+        <li><a  th:if="${numberOfPage==0}" class="pageSelectorBtn" th:text="'<'"></a></li>
+        <li><a  th:text="${numberOfPage + 1}"></a></li>
+        <li><a th:if="${not allBooks.isEmpty()}"  th:href="@{/(page=${numberOfPage+1}, filter=${filter}, stringToFind=${stringToFind}, genre=${genre})}" class="pageSelectorBtn" th:text="'>'"></a></li>
+        <li><a  th:if="${allBooks.isEmpty()}" class="pageSelectorBtn" th:text="'>'"></a></li>
+
+    </ul>
+
+</div>
 
 
 <div th:fragment="selectorOfUsersPages" style="display: flex ;align-items: center;justify-content: center">

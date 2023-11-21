@@ -38,7 +38,7 @@ public class BooksUsersService {
         User curUser = usersRepository.getOne(user.getId());
         Book curBook = booksRepository.getOne(bookId);
         curUser.setHasPass(true);
-        curBook.setIstaken(true);
+        curBook.setApproved(true);
     }
 
     @Transactional
@@ -47,7 +47,7 @@ public class BooksUsersService {
         Book_User currentRelation = findFirstByBookIdOrderByTimeDesc(id);
         User owner = usersRepository.getOne(currentRelation.getUserId());
         owner.setHasPass(false);
-        curBook.setIstaken(false);
+        curBook.setApproved(false);
     }
 
 

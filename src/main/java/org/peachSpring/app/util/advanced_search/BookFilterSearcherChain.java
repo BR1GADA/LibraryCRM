@@ -20,12 +20,12 @@ public class BookFilterSearcherChain extends SearcherChain<Book> {
         if (searchConfig.getFilter() == null) {
             return list;
         }
-        switch ((BookFilter) searchConfig.getFilter()) {
-            case YEAR:
-                return list.stream().sorted(Comparator.comparingInt(Book::getYear)).collect(Collectors.toList());
-            default:
-                return list;
-        }
+        return switch ((BookFilter) searchConfig.getFilter()) {
+            case YEAR -> list.stream().sorted(Comparator.comparingInt(Book::getYear)).collect(Collectors.toList());
+            case IS_APPROVED -> list.stream().filter(Book::isApproved).collect(Collectors.toList());
+            case IS_NOT_APPROVED -> list.stream().filter(book -> !book.isApproved()).collect(Collectors.toList());
+            default -> list;
+        };
     }
 
 

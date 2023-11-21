@@ -3,12 +3,9 @@ package org.peachSpring.app.services;
 import org.peachSpring.app.exceptions.BookNotFoundException;
 import org.peachSpring.app.exceptions.CannotDeleteBookException;
 import org.peachSpring.app.models.Book;
-import org.peachSpring.app.models.User;
 import org.peachSpring.app.repositories.BooksRepository;
-import org.peachSpring.app.util.advanced_search.SearcherChain;
 import org.peachSpring.app.util.advanced_search.BookFilterSearcherChain;
 import org.peachSpring.app.util.search_config.BookSearchConfig;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +44,7 @@ public class BookService {
     @Transactional
     public void delete(Book book) throws CannotDeleteBookException {
         Book curBook = booksRepository.getOne(book.getId());
-        if (!curBook.isIstaken()) {
+        if (!curBook.isApproved()) {
             booksRepository.delete(curBook);
         } else {
             throw new CannotDeleteBookException(
@@ -63,6 +60,12 @@ public class BookService {
                 .skip(searchConfig.getNumberOfPage()*searchConfig.getItemsPerPage())
                 .toList();
         return list.subList(0,Math.min(list.size(), searchConfig.getItemsPerPage()));
+    }
+    @Transactional
+    public void approveBook(long id){
+        Book bookToApprove = findOne(id);
+        bookToApprove.setApproved(true);
+        booksRepository.save(bookToApprove);
     }
 
 

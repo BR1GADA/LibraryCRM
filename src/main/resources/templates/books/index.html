@@ -4,45 +4,52 @@
 
 <body data-aos-easing="slide" data-aos-duration="800" data-aos-delay="0">
 <div id="colorlib-page">
-  <aside id="colorlib-aside" role="complementary" class="js-fullheight" style="height: 939px;">
-    <div th:if="${usersRole} == ROLE_USER">
-      <nav id="colorlib-main-menu" role="navigation">
-        <ul>
-          <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-          <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
-        </ul>
-      </nav>
-    </div>
-    <div th:if="${usersRole} == ROLE_ADMIN">
-      <nav id="colorlib-main-menu" role="navigation">
-        <ul>
-          <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
-          <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
-          <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
-          <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="colorlib-footer">
-      <div id="colorlib-logo" class="mb-4">
+  <div>
 
-        <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
-          <span th:text="${usersName}"></span>
-        </a>
+    <aside id="colorlib-aside2" role="complementary" class="sidenav closebtn" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</aside>
+    <aside id="colorlib-aside" role="complementary" class="sidenav js-fullheight help-h" style="height: 939px;">
+      <a style="position: relative;bottom: 70px;left: 250px; font-size: 30px" href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div th:if="${usersRole} == ROLE_USER">
+        <nav id="colorlib-main-menu" role="navigation">
+          <ul>
+            <li><a th:href="@{/}" th:text="'Main page'"></a></li>
+            <li  class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'"> </a></li>
+            <li ><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+          </ul>
+        </nav>
       </div>
-      <form th:method="POST" th:action="@{/logout}">
-        <input style="cursor: pointer" type="submit" th:value="'Logout'">
-      </form>
-    </div>
+      <div th:if="${usersRole} == ROLE_ADMIN">
+        <nav id="colorlib-main-menu" role="navigation">
+          <ul>
+            <li ><a th:href="@{/}" th:text="'Main page'"></a></li>
+            <li class="colorlib-active"><a th:href="@{/books}" th:text="'Show all books'" > </a></li>
+            <li><a th:href="@{/users}" th:text="'Show all users'" ></a></li>
+            <li><a th:href="@{/books/new}"  th:text="'Add new Book'"></a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="colorlib-footer">
+        <div id="colorlib-logo" class="mb-4">
 
-  </aside>
+          <a th:href="@{/users/personal/{id}(id=${usersId})}" style="background-image: url(/images/bg_1.jpg);">Welcome,
+            <span th:text="${usersName}"></span>
+          </a>
+        </div>
+        <form th:method="POST" th:action="@{/logout}">
+          <input style="cursor: pointer" type="submit" th:value="'Logout'">
+        </form>
+      </div>
+
+    </aside>
+
+  </div>
   <div id="colorlib-main">
     <section class="ftco-section ftco-no-pt ftco-no-pb">
       <div class="container">
         <div class="row d-flex">
           <div class="col-xl-8 py-5 px-md-5">
             <div class="row pt-md-4">
-              <div th:each="book : ${allBooks}" class="col-md-12">
+              <div th:each="book : ${allBooks}" th:if="${book.isApproved()}" class="col-md-12">
                 <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
                   <a th:href="@{/books/{id}(id=${book.getId()})}" class="img img-2" th:style="'background-image:url('+${book.getImage()} + '), url(/images/error-404.png);'" ></a>
                   <div class="text text-2 pl-md-4">
@@ -197,6 +204,18 @@
 <script type="text/javascript" th:src="@{/js/jquery.animateNumber.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/scrollax.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+<script>function openNav() {
+  document.getElementById("colorlib-aside").classList.remove('help-h');
+  document.getElementById("colorlib-aside").style.paddingLeft = "2em";
+  document.getElementById("colorlib-aside").style.paddingRight = "2em";
+}</script>
+<script>
+
+  function closeNav() {
+    document.getElementById("colorlib-aside").classList.add('help-h');
+  }
+</script>
 
 
 
