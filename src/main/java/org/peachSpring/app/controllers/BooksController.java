@@ -161,7 +161,8 @@ public class BooksController {
             model.addAttribute("correctBook", bookService.findOne(id));
             return "books/edit";
         }
-        book.setApproved(true);
+        Book curBook = bookService.findOne(id);
+        book.setApproved(curBook.isApproved());
         bookService.update(book,id);
 
         return "redirect:/books/{id}";

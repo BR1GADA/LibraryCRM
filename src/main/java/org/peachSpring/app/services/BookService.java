@@ -44,14 +44,8 @@ public class BookService {
     @Transactional
     public void delete(Book book) throws CannotDeleteBookException {
         Book curBook = booksRepository.getOne(book.getId());
-        if (!curBook.isApproved()) {
-            booksRepository.delete(curBook);
-        } else {
-            throw new CannotDeleteBookException(
-                    String.format(
-                    "Book with id %d cannot be deleted `cause one has an owner", curBook.getId())
-            );
-        }
+        booksRepository.delete(curBook);
+
     }
     public List<Book> getBooks(BookSearchConfig searchConfig){
         List<Book> list = new BookFilterSearcherChain(searchConfig)
